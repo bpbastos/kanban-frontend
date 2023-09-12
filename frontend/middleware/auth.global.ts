@@ -10,13 +10,13 @@ export default defineNuxtRouteMiddleware((to, from) => {
       setAuthenticated(true); // update the state to authenticated
     }
   
-    // if token exists and url is /signin or /signup redirect to homepage
-    if (token.value && to?.name === 'signin' || token.value && to?.name === 'signup') {
+    // if token exists and url is /signin or /sign redirect to homepage
+    if ((token.value && to?.name === 'signin') || (token.value && to?.name === 'signup')) {
       return navigateTo('/board');
     }
 
     // if token doesn't exist redirect to log in
-    if (!token.value && to?.name !== 'signin') {
+    if (!token.value && to?.name !== 'signin' && !token.value && to?.name !== 'signup') {
       abortNavigation();
       return navigateTo('/signin');
     }
