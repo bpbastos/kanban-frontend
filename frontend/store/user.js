@@ -18,6 +18,7 @@ export const useUserStore = defineStore("user", () => {
     email: "",
     profilePicture: "",
     token: "",
+    authenticated: false
   });
 
   async function login(_username, _password) {
@@ -26,10 +27,10 @@ export const useUserStore = defineStore("user", () => {
     try {    
       const response = await $fetch(`${config.BACK4APP_URL}/login`, {
         method: "POST",
-        body: {
+        body: JSON.stringify({
           username: _username,
           password: _password,
-        },
+        }),
         headers: {
           "Content-Type": "application/json",
           "X-Parse-Application-Id": config.BACK4APP_APPID,
@@ -57,11 +58,11 @@ export const useUserStore = defineStore("user", () => {
     try {
       const response = await $fetch(`${config.BACK4APP_URL}/users`, {
         method: "POST",
-        body: {
+        body: JSON.stringify({
           username: _username,
           email: _email,
           password: _password,
-        },
+        }),
         headers: {
           Accept: "application/json",
           "X-Parse-Application-Id": config.BACK4APP_APPID,
@@ -73,12 +74,15 @@ export const useUserStore = defineStore("user", () => {
       if (response.objectId) {
         const token = useCookie("token");
         token.value = response.sessionToken;
+        this.authenticated = true;
+
         this.user.id = response.objectId;
         this.user.token = response.sessionToken;
         notification.success("User successfully created");
       }
     } catch (e) {
       notification.error(e.data.error);
+      this.destroy();
     }
   }
 
@@ -96,13 +100,18 @@ export const useUserStore = defineStore("user", () => {
           "X-Parse-Revocable-Session": 1,
         },
       });
-      this.clean();
+      this.destroy();
     } catch (e) {
       notification.error(e.data.error);
+      //this.destroy();
     }
   }  
 
-  function clean() {
+  function destroy() {
+    const token = useCookie('token');   
+    token.value = null;
+    this.authenticated = false;
+
     this.user.id = "";
     this.user.username = "";
     this.user.firstName = "";
@@ -117,8 +126,16 @@ export const useUserStore = defineStore("user", () => {
     this.user.address = "";
     this.user.email = "";
     this.user.profilePicture = "";
-    this.user.token = "";    
+    this.user.token = ""; 
   }
 
-  return { user, register, login, logout }
+  function isAuthenticated () {
+    return this.authenticated
+  }
+
+  function setAuthenticated (a) {
+    this.authenticated = a
+  }  
+
+  return { user, register, login, logout, isAuthenticated, setAuthenticated }
 });
