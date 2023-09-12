@@ -6,7 +6,7 @@ from models.priority import Priority
 from models.workflow import Workflow
 
 class Task(BaseModel):
-    __tablename__ = 'kb_task'
+    __tablename__ = 'task'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)

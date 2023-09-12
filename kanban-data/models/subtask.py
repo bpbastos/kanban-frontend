@@ -4,7 +4,7 @@ from models.base import BaseModel
 from models.task import Task
 
 class SubTask(BaseModel):
-    __tablename__ = 'kb_subtask'
+    __tablename__ = 'subtask'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)

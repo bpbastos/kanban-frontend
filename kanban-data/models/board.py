@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from .base import BaseModel
 
 class Board(BaseModel):
-    __tablename__ = 'kb_board'
+    __tablename__ = 'board'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)

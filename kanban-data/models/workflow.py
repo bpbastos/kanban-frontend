@@ -5,7 +5,7 @@ from models.base import BaseModel
 from models.board import Board
 
 class Workflow(BaseModel):
-    __tablename__ = 'kb_workflow'
+    __tablename__ = 'workflow'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     color = Column(String)
