@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-    '@tailvue/nuxt'
+    '@vueuse/nuxt'
   ],  
   runtimeConfig: {
     public: {
@@ -14,4 +14,12 @@ export default defineNuxtConfig({
       BACK4APP_RESTAPIKEY: process.env.BACK4APP_RESTAPIKEY
     }
   },
+  vite: {
+    server: {
+      hmr: {
+        protocol: 'ws',
+        host: 'localhost'
+      }
+    }
+  } 
 })
