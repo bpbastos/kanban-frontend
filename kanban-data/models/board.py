@@ -8,7 +8,7 @@ class Board(BaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
 
-    workflows = relationship("Workflow", back_populates="board", lazy="joined")
+    workflows = relationship("Workflow", back_populates="board", lazy="dynamic")
 
     def __init__(self, name, user_id):
         self.name = name
