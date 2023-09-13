@@ -7,9 +7,10 @@ class SubTask(BaseModel):
     __tablename__ = 'subtask'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String)
-    order = Column(Integer)
-    done = Column(Boolean)
+    title = Column(String, nullable=False)
+    order = Column(Integer, nullable=False)
+    done = Column(Boolean, nullable=False)
+    
     task_id = Column(Integer, ForeignKey(Task.id), nullable=False)
 
     task = relationship("Task", back_populates="subtasks", lazy="joined")

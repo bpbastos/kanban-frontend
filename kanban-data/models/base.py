@@ -8,12 +8,11 @@ Base = declarative_base()
 class BaseModel(Base):
     __abstract__ = True
 
-    user_id = Column(String)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    user_id = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     
     def __init__(self, user_id):
         self.user_id = user_id
-        self.created_at = datetime.utcnow
 
     def to_dict(self):
         return {

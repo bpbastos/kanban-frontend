@@ -9,9 +9,10 @@ class Task(BaseModel):
     __tablename__ = 'task'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String)
-    totalSubTasks = Column(Integer)
-    totalSubTasksDone = Column(Integer)
+    title = Column(String, nullable=False)
+    totalSubTasks = Column(Integer, nullable=False, default=0)
+    totalSubTasksDone = Column(Integer, nullable=False, default=0)
+    
     priority_id = Column(Integer, ForeignKey(Priority.id), nullable=False)
     workflow_id = Column(Integer, ForeignKey(Workflow.id), nullable=False)    
 

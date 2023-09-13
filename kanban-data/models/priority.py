@@ -1,10 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from .base import BaseModel
 
-Base = declarative_base()
-
-class Priority(Base):
+class Priority(BaseModel):
     __tablename__ = 'priorities'
     
     id = Column(Integer, primary_key=True, autoincrement=True)

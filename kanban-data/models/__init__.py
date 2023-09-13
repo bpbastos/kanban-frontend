@@ -1,4 +1,3 @@
-# from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import sessionmaker
 import asyncio
 import os
@@ -6,6 +5,8 @@ import os
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
+
+
 
 # importando os elementos definidos no modelo
 from models.base import Base
@@ -15,18 +16,19 @@ from models.subtask import SubTask
 from models.task import Task
 from models.workflow import Workflow
 
-db_path = "db/"
+
+DATABASE_PATH = "db/"
 # Verifica se o diretorio não existe
-if not os.path.exists(db_path):
+if not os.path.exists(DATABASE_PATH):
    # então cria o diretorio
-   os.makedirs(db_path)
+   os.makedirs(DATABASE_PATH)
 
 # url de acesso ao banco (essa é uma url de acesso ao sqlite local)
-db_url = 'sqlite+aiosqlite:///%s/kanban.sqlite3' % db_path
+DATABASE_URL = 'sqlite+aiosqlite:///%s/kanban.db' % DATABASE_PATH 
 
 # cria a engine de conexão assíncrona com o banco
 engine = create_async_engine(
-    db_url, 
+    DATABASE_URL, 
     connect_args={"check_same_thread": False},
     echo=False
 )

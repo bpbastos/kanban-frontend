@@ -6,7 +6,7 @@ class Board(BaseModel):
     __tablename__ = 'board'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
+    name = Column(String, nullable=False)
 
     workflows = relationship("Workflow", back_populates="board", lazy="joined")
 
