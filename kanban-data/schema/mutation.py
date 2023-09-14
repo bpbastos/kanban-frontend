@@ -108,38 +108,4 @@ class Mutation:
                 await s.delete(db_sub_task)       
                 await s.commit() 
         return AddResponse(id=db_sub_task.id)         
-
-"""
-mutation addSubTask ($title: String!, $taskId: ID!) {
-  addSubTask(
-    title: $title
-    taskId: $taskId
-  )
-  {
-    id
-  }
-} 
-
-mutation markSubTaskDone($subTaskId: ID!) {
-  markSubTaskDone(
-    subTaskId: $subTaskId
-  )
-  {
-    id
-  }
-} 
-
-mutation deleteSubTask($subTaskId: ID!) {
-  deleteSubTask(
-    input: {
-      id: $subTaskId
-    }
-  )
-  {
-    subTask {
-      id
-    }
-  }
-}
-"""
     
