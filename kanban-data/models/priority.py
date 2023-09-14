@@ -5,7 +5,7 @@ from fastapi_utils.guid_type import GUID, GUID_SERVER_DEFAULT_POSTGRESQL
 from .base import BaseModel
 
 class Priority(BaseModel):
-    __tablename__ = 'priorities'
+    __tablename__ = 'priority'
     
     id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
     name = Column(String, nullable=False)
@@ -13,9 +13,10 @@ class Priority(BaseModel):
     
     tasks = relationship("Task", back_populates="priority", lazy="joined")
 
-    def __init__(self, name, color):
+    def __init__(self, name, color, user_id):
         self.name = name
         self.color = color
+        super().__init__(user_id)
 
     def to_dict(self):
         return {
