@@ -10,8 +10,8 @@ class Task(BaseModel):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String, nullable=False)
-    totalSubTasks = Column(Integer, nullable=False, default=0)
-    totalSubTasksDone = Column(Integer, nullable=False, default=0)
+    total_sub_tasks = Column(Integer, nullable=False, default=0)
+    total_sub_tasks_done = Column(Integer, nullable=False, default=0)
     
     priority_id = Column(Integer, ForeignKey(Priority.id), nullable=False)
     workflow_id = Column(Integer, ForeignKey(Workflow.id), nullable=False)    
@@ -20,18 +20,18 @@ class Task(BaseModel):
     workflow = relationship("Workflow", back_populates="tasks", lazy="joined")
     subtasks = relationship("SubTask", back_populates="task", lazy="joined")
 
-    def __init__(self, title, totalSubTasks, totalSubTasksDone, user_id):
+    def __init__(self, title, total_sub_tasks, total_sub_tasks_done, user_id):
         self.title = title
-        self.totalSubTasks = totalSubTasks
-        self.totalSubTasksDone = totalSubTasksDone
+        self.total_sub_tasks = total_sub_tasks
+        self.total_sub_tasks_done = total_sub_tasks_done
         super().__init__(user_id)
 
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
-            'totalSubTasks': self.totalSubTasks,
-            'totalSubTasksDone': self.totalSubTasksDone,
+            'total_sub_tasks': self.total_sub_tasks,
+            'total_sub_tasks_done': self.total_sub_tasks_done,
             'priority': self.priority.to_dict(),
             'subtasks': [subtask.to_dict() for subtask in self.subtasks]
         }

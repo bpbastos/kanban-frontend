@@ -3,6 +3,8 @@ import strawberry
 from models.board import Board as BoardModel
 from models.workflow import Workflow as WorkflowModel
 
+from schema.workflow import Workflow
+
 @strawberry.type
 class Board:
     id: strawberry.ID
