@@ -1,7 +1,6 @@
 import strawberry
 
 from models.board import Board as BoardModel
-from models.workflow import Workflow as WorkflowModel
 
 from schema.workflow import Workflow
 
@@ -16,5 +15,5 @@ class Board:
         return cls(
             id=strawberry.ID(str(model.id)),
             name=model.name,
-            workflows=[WorkflowModel.marshal(w) for w in model.workflows] if model.workflows else []
+            workflows=[Workflow.marshal(w) for w in model.workflows] if model.workflows else []
         )
