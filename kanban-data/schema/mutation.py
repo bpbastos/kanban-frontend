@@ -2,11 +2,9 @@ from models.board import Board as BoardModel
 from models.workflow import Workflow as WorkflowModel
 from models.priority import Priority as PriorityModel
 from models.task import Task as TaskModel
+from models.subtask import SubTask as SubTaskModel
 from models import get_session
 
-from schema.board import Board
-from schema.priority import Priority
-from schema.task import Task
 from . import Info
 
 from sqlalchemy import select
@@ -28,22 +26,15 @@ class AddBoardInput:
     workflows: list[WorkflowInput]
 
 @strawberry.type
-class AddBoardResponse:    
+class AddResponse:    
     id: strawberry.ID
 
-@strawberry.type
-class AddPriorityResponse:    
-    id: strawberry.ID
-
-@strawberry.type
-class AddTaskResponse:    
-    id: strawberry.ID
 
 
 @strawberry.type
 class Mutation:
     @strawberry.mutation
-    async def add_board(self, info: Info, board: AddBoardInput) -> AddBoardResponse:
+    async def add_board(self, info: Info, board: AddBoardInput) -> AddResponse:
         async with get_session() as s:
             new_board = BoardModel(name=board.name,user_id=info.context.user.get('id'))
             s.add(new_board)
@@ -52,19 +43,19 @@ class Mutation:
                 newWorkflow = WorkflowModel(name=w.name,color=w.color,board_id=new_board.id,user_id=info.context.user.get('id'))
                 s.add(newWorkflow)
             await s.commit() 
-        return AddBoardResponse(id=new_board.id)
+        return AddResponse(id=new_board.id)
     
     @strawberry.mutation
-    async def add_priority(self, info: Info, priority: PriorityInput) -> AddPriorityResponse:
+    async def add_priority(self, info: Info, priority: PriorityInput) -> AddResponse:
         async with get_session() as s:
             new_priority = PriorityModel(name=priority.name,color=priority.color,user_id=info.context.user.get('id'))
             s.add(new_priority)
             await s.flush()
             await s.commit() 
-        return AddPriorityResponse(id=new_priority.id)  
+        return AddResponse(id=new_priority.id)  
 
     @strawberry.mutation
-    async def add_task(self, info: Info, title:str, workflow_id: strawberry.ID) -> AddTaskResponse:
+    async def add_task(self, info: Info, title:str, workflow_id: strawberry.ID) -> AddResponse:
         async with get_session() as s:
             sql = select(PriorityModel).filter(PriorityModel.name == "Baixa")
             db_priority = (await s.execute(sql)).scalars().unique().one_or_none()
@@ -72,18 +63,83 @@ class Mutation:
             s.add(new_task)
             await s.flush()
             await s.commit() 
-        return AddTaskResponse(id=new_task.id)
+        return AddResponse(id=new_task.id)
+    
+    @strawberry.mutation
+    async def add_sub_task(self, info: Info, title:str, task_id: strawberry.ID) -> AddResponse:
+        async with get_session() as s:
+            sql = select(TaskModel).filter(TaskModel.id == task_id)
+            db_task = (await s.execute(sql)).scalars().unique().one_or_none()
+            if db_task:
+                new_sub_task = SubTaskModel(title=title,order=0,done=False,task_id=task_id, user_id=info.context.user.get('id'))
+                s.add(new_sub_task)
+                db_task.total_sub_tasks += 1
+                await s.commit() 
+        return AddResponse(id=new_sub_task.id)   
+
+    @strawberry.mutation
+    async def mark_sub_task_done(self, info: Info, sub_task_id: strawberry.ID) -> AddResponse:
+        async with get_session() as s:
+            sql = select(SubTaskModel).filter(SubTaskModel.id == sub_task_id)
+            db_sub_task = (await s.execute(sql)).scalars().unique().one_or_none()
+            if db_sub_task:
+                db_sub_task.done = True
+                sql = select(TaskModel).filter(TaskModel.id == db_sub_task.task_id)
+                db_task = (await s.execute(sql)).scalars().unique().one_or_none()
+                db_task.total_sub_tasks_done += 1
+                await s.commit() 
+        return AddResponse(id=db_sub_task.id)   
+
+    @strawberry.mutation
+    async def delete_sub_task(self, info: Info, sub_task_id: strawberry.ID) -> AddResponse:
+        async with get_session() as s:
+            sql = select(SubTaskModel).filter(SubTaskModel.id == sub_task_id)
+            db_sub_task = (await s.execute(sql)).scalars().unique().one_or_none()
+            if db_sub_task:
+                sql = select(TaskModel).filter(TaskModel.id == db_sub_task.task_id)
+                db_task = (await s.execute(sql)).scalars().unique().one_or_none()
+
+                if db_sub_task.done and db_task.total_sub_tasks_done > 0:
+                    db_task.total_sub_tasks_done -= 1
+                    
+                if db_task.total_sub_tasks > 0: 
+                    db_task.total_sub_tasks -= 1   
+
+                await s.delete(db_sub_task)       
+                await s.commit() 
+        return AddResponse(id=db_sub_task.id)         
 
 """
-mutation addNewTask ($title: String!, $boardId: ID!, $workflowId: ID!) {
-	addTask(
+mutation addSubTask ($title: String!, $taskId: ID!) {
+  addSubTask(
     title: $title
-    workflowId: $workflowId
-    boardId: $boardId
-  ) 
+    taskId: $taskId
+  )
   {
     id
   }
+} 
+
+mutation markSubTaskDone($subTaskId: ID!) {
+  markSubTaskDone(
+    subTaskId: $subTaskId
+  )
+  {
+    id
+  }
+} 
+
+mutation deleteSubTask($subTaskId: ID!) {
+  deleteSubTask(
+    input: {
+      id: $subTaskId
+    }
+  )
+  {
+    subTask {
+      id
+    }
+  }
 }
-"""    
+"""
     

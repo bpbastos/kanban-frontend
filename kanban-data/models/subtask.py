@@ -21,6 +21,7 @@ class SubTask(BaseModel):
         self.title = title
         self.order = order
         self.done = done
+        self.task_id = task_id
         super().__init__(user_id)
 
     def to_dict(self):
