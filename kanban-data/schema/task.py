@@ -23,6 +23,6 @@ class Task:
             title=model.title,
             total_sub_tasks=model.total_sub_tasks,
             total_sub_tasks_done=model.total_sub_tasks_done,
-            priority=PriorityModel.marshal(model.priority) if model.priority else None,
-            subtasks=[SubTaskModel.marshal(st) for st in model.subtasks] if model.subtasks else []
+            priority=Priority.marshal(model.priority) if model.priority else None,
+            subtasks=[SubTask.marshal(st) for st in model.subtasks] if model.subtasks else []
         )

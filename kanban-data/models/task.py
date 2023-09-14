@@ -19,14 +19,14 @@ class Task(BaseModel):
     priority_id = Column(GUID, ForeignKey(Priority.id), nullable=False)
     workflow_id = Column(GUID, ForeignKey(Workflow.id), nullable=False)    
 
-    priority = relationship("Priority", back_populates="tasks", lazy="joined")
     workflow = relationship("Workflow", back_populates="tasks", lazy="joined")
+    priority = relationship("Priority", back_populates="tasks", lazy="joined")
     subtasks = relationship("SubTask", back_populates="task", lazy="joined")
 
-    def __init__(self, title, total_sub_tasks, total_sub_tasks_done, user_id):
+    def __init__(self, title, priority_id, workflow_id, user_id):
         self.title = title
-        self.total_sub_tasks = total_sub_tasks
-        self.total_sub_tasks_done = total_sub_tasks_done
+        self.priority_id = priority_id
+        self.workflow_id = workflow_id
         super().__init__(user_id)
 
     def to_dict(self):
