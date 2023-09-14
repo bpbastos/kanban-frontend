@@ -1,16 +1,19 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
+from fastapi_utils.guid_type import GUID, GUID_SERVER_DEFAULT_POSTGRESQL
 
 from models.base import BaseModel
 from models.board import Board
 
+
+
 class Workflow(BaseModel):
     __tablename__ = 'workflow'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
     color = Column(String)
     name = Column(String)
-    board_id = Column(Integer, ForeignKey(Board.id), nullable=False)
+    board_id = Column(GUID, ForeignKey(Board.id), nullable=False)
 
     board = relationship("Board", back_populates="workflows", lazy="joined")
     tasks = relationship("Task", back_populates="workflow", lazy="joined")

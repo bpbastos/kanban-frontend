@@ -1,11 +1,13 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+from fastapi_utils.guid_type import GUID, GUID_SERVER_DEFAULT_POSTGRESQL
+
 from .base import BaseModel
 
 class Board(BaseModel):
     __tablename__ = 'board'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
     name = Column(String, nullable=False)
 
     workflows = relationship("Workflow", back_populates="board", lazy="dynamic")

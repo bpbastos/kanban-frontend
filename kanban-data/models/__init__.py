@@ -7,7 +7,6 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 
-
 # importando os elementos definidos no modelo
 from models.base import Base
 from models.board import Board
@@ -24,13 +23,15 @@ if not os.path.exists(DATABASE_PATH):
    os.makedirs(DATABASE_PATH)
 
 # url de acesso ao banco (essa é uma url de acesso ao sqlite local)
-DATABASE_URL = 'sqlite+aiosqlite:///%s/kanban.db' % DATABASE_PATH 
+#DATABASE_URL = 'sqlite+aiosqlite:///%s/kanban.db' % DATABASE_PATH 
+#postgresql+asyncpg://postgres:kanbandb@localhos:5432/kanban
+DATABASE_URL = 'postgresql+asyncpg://kanban:kanbanpass@localhost:5432/kanban'
 
 # cria a engine de conexão assíncrona com o banco
 engine = create_async_engine(
     DATABASE_URL, 
-    connect_args={"check_same_thread": False},
-    echo=False
+    echo=True,
+    future=True,
 )
 
 # Instancia um criador de seção com o banco
