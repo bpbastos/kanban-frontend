@@ -1,9 +1,11 @@
 
+from typing import List
 from sqlalchemy import select
 import strawberry
 
 from .board import Board
 from .priority import Priority
+
 from . import Info
 from . import UserNotFound
 
@@ -14,7 +16,7 @@ from models import get_session
 @strawberry.type
 class Query:
     @strawberry.field()
-    async def boards(self, info: Info) -> list[Board]:
+    async def boards(self, info: Info) -> List[Board]:
         user_id = info.context.user.get('id')
         #if not user_id:
         #    return UserNotFound()
@@ -25,7 +27,7 @@ class Query:
         return [Board.marshal(board) for board in db_boards]
 
     @strawberry.field()
-    async def priorities(self, info: Info) -> list[Priority]:
+    async def priorities(self, info: Info) -> List[Priority]:
         user_id = info.context.user.get('id')
         #if not user_id:
         #    return UserNotFound()
