@@ -23,5 +23,5 @@ class SubTask:
             title=model.title,
             order=model.order,
             done=model.done,
-            task=Task.marshal(model.task) if model.task else None,
+            task=model.task
         )

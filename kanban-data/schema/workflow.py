@@ -5,6 +5,7 @@ import strawberry
 from models.workflow import Workflow as WorkflowModel
 
 from .task import Task
+
 #Circular depency hell
 if TYPE_CHECKING:
     from schema.board import Board
@@ -23,6 +24,6 @@ class Workflow:
             id=strawberry.ID(str(model.id)),
             color=model.color,
             name=model.name,
-            board=Board.marshal(model.board) if model.board else None,
-            tasks=[Task.marshal(t) for t in model.tasks] if model.tasks else []
+            board=model.board,
+            tasks=model.tasks
         )    

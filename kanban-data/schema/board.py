@@ -19,5 +19,5 @@ class Board:
         return cls(
             id=strawberry.ID(str(model.id)),
             name=model.name,
-            workflows=[Workflow.marshal(w) for w in model.workflows] if model.workflows else []
+            workflows=model.workflows
         )

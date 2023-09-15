@@ -21,5 +21,5 @@ class Priority:
             id=strawberry.ID(str(model.id)),
             name=model.name,
             color=model.color,
-            tasks=[Task.marshal(t) for t in model.tasks] if model.tasks else []
+            tasks=model.tasks
         )
