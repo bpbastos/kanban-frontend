@@ -1,14 +1,18 @@
+from typing import TYPE_CHECKING, Annotated, List
+
 import strawberry
 
 from models.board import Board as BoardModel
 
-from schema.workflow import Workflow
+#Circular dependency hell
+if TYPE_CHECKING:
+    from .workflow import Workflow
 
 @strawberry.type
 class Board:
     id: strawberry.ID
     name: str
-    workflows: list[Workflow]
+    workflows: List[Annotated["Workflow", strawberry.lazy(".workflow")]]
 
     @classmethod
     def marshal(cls, model: BoardModel) -> "Board":

@@ -1,11 +1,15 @@
+from typing import TYPE_CHECKING, Annotated, List
+
 import strawberry
 
 from models.task import Task as TaskModel
-from models.subtask import SubTask as SubTaskModel
-from models.priority import Priority as PriorityModel
 
 from .priority import Priority
+
 from .subtask import SubTask
+#Circular depency hell
+if TYPE_CHECKING:
+    from .workflow import Workflow
 
 @strawberry.type
 class Task:
@@ -14,7 +18,8 @@ class Task:
     total_sub_tasks: int
     total_sub_tasks_done: int
     priority: Priority
-    subtasks: list[SubTask]
+    workflow: Annotated["Workflow", strawberry.lazy(".workflow")]
+    subtasks: List[SubTask]
 
     @classmethod
     def marshal(cls, model: TaskModel) -> "Task":
@@ -24,5 +29,6 @@ class Task:
             total_sub_tasks=model.total_sub_tasks,
             total_sub_tasks_done=model.total_sub_tasks_done,
             priority=Priority.marshal(model.priority) if model.priority else None,
+            workflow=Workflow.marshal(model.workflow) if model.workflow else None,
             subtasks=[SubTask.marshal(st) for st in model.subtasks] if model.subtasks else []
         )
