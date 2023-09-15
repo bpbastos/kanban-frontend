@@ -72,10 +72,10 @@ class Mutation:
     async def delete_task(self, info: Info, task_id: strawberry.ID) -> AddResponse:
         user_id = info.context.user.get('id')
         async with get_session() as s:
-            sql = select(TaskModel).filter(TaskModel.id == task_id).filter(TaskModel.user_id == user_id)
+            sql = select(TaskModel).filter(TaskModel.id == task_id)
             db_task = (await s.execute(sql)).scalars().unique().one_or_none()
             if db_task:
-                s.delete(db_task)
+                await s.delete(db_task)
                 await s.commit() 
         return AddResponse(id=task_id)        
     

@@ -10,7 +10,7 @@ class Board(BaseModel):
     id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
     name = Column(String, nullable=False)
 
-    workflows = relationship("Workflow", back_populates="board", lazy="joined")
+    workflows = relationship("Workflow", back_populates="board",  cascade="all, delete-orphan", lazy="joined")
 
     def __init__(self, name, user_id):
         self.name = name

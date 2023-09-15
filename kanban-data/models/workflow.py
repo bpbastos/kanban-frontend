@@ -16,7 +16,7 @@ class Workflow(BaseModel):
     board_id = Column(GUID, ForeignKey(Board.id), nullable=False)
 
     board = relationship("Board", back_populates="workflows", lazy="joined")
-    tasks = relationship("Task", back_populates="workflow", lazy="joined")
+    tasks = relationship("Task", back_populates="workflow", cascade="all, delete-orphan", lazy="joined")
 
     def __init__(self, color, name, board_id, user_id):
         self.color = color
