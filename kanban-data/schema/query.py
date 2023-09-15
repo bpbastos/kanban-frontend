@@ -5,12 +5,14 @@ import strawberry
 
 from .board import Board
 from .priority import Priority
+from .task import Task
 
 from . import Info
 from . import UserNotFound
 
 from models.board import Board as BoardModel
 from models.priority import Priority as PriorityModel
+from models.task import Task as TaskModel
 from models import get_session
 
 @strawberry.type
@@ -47,3 +49,14 @@ class Query:
             sql = select(BoardModel).filter(BoardModel.id == id).filter(BoardModel.user_id == user_id)
             db_board = (await s.execute(sql)).scalars().unique().one_or_none()
         return Board.marshal(db_board)
+
+    @strawberry.field()
+    async def task(self, info: Info, id: strawberry.ID) -> Task:
+        user_id = info.context.user.get('id')
+        #if not user_id:
+        #    return UserNotFound()
+        
+        async with get_session() as s:
+            sql = select(TaskModel).filter(TaskModel.id == id).filter(TaskModel.user_id == user_id)
+            db_task = (await s.execute(sql)).scalars().unique().one_or_none()
+        return Task.marshal(db_task)      
