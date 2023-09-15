@@ -6,13 +6,12 @@ from models.base import BaseModel
 from models.priority import Priority
 from models.workflow import Workflow
 
-
-
 class Task(BaseModel):
     __tablename__ = 'task'
 
     id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
-    title = Column(String, nullable=False)
+    title = Column(String(40), nullable=False)
+    description = Column(String(4000), nullable=False)    
     total_sub_tasks = Column(Integer, nullable=False, default=0)
     total_sub_tasks_done = Column(Integer, nullable=False, default=0)
     

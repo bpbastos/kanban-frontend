@@ -11,8 +11,8 @@ class Workflow(BaseModel):
     __tablename__ = 'workflow'
 
     id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
-    color = Column(String)
-    name = Column(String)
+    color = Column(String(20), nullable=False)
+    name = Column(String(40), nullable=False)
     board_id = Column(GUID, ForeignKey(Board.id), nullable=False)
 
     board = relationship("Board", back_populates="workflows", lazy="joined")

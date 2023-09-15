@@ -8,8 +8,8 @@ class Priority(BaseModel):
     __tablename__ = 'priority'
     
     id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
-    name = Column(String, nullable=False)
-    color = Column(String, nullable=False)
+    name = Column(String(40), nullable=False)
+    color = Column(String(20), nullable=False)
     
     tasks = relationship("Task", back_populates="priority", lazy="joined")
 

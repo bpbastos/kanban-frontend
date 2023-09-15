@@ -9,7 +9,7 @@ class SubTask(BaseModel):
     __tablename__ = 'subtask'
 
     id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
-    title = Column(String, nullable=False)
+    title = Column(String(40), nullable=False)
     order = Column(Integer, nullable=False)
     done = Column(Boolean, nullable=False)
     
