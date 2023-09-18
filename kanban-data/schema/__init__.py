@@ -41,7 +41,7 @@ class Context(BaseContext):
     def user(self) -> dict | None:
         if not self.request:
             return None
-        user_id = self.request.headers.get("User-Id", None)
+        user_id = self.request.headers.get("X-User-Id", None)
         return {"id": user_id}
 
 
