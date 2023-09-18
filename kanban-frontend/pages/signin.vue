@@ -58,7 +58,6 @@ const error = ref('')
 const signIn = async () => {
     await login(username.value, password.value)
     if (user.token) {
-        console.log(user.token)
         await navigateTo('/board')
     } else {
        error.value = getLastNotification()
