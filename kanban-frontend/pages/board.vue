@@ -1,7 +1,9 @@
 <template>
-    <div>
-        Olá {{ user }}
+  <div>
+    <div class="pb-8">
+      <BoardSwitcher />
     </div>
+  </div>
 </template>
 <script setup>
 import { storeToRefs } from 'pinia'
