@@ -5,21 +5,19 @@ export const useUserStore = defineStore("user", () => {
   const user = ref({
     id: "",
     username: "",
-    firstName: "",
-    lastName: "",
-    occupation: "",
-    biografy: "",
-    status: "",
-    memberSince: "",
-    birthday: "",
-    gender: "",
-    mobile: "",
-    address: "",
-    email: "",
     profilePicture: "",
     token: "",
     authenticated: false
   });
+
+  function destroy() {
+    user.value.authenticated = false;
+    user.value.id = "";
+    user.value.username = "";
+    user.value.email = "";
+    user.value.profilePicture = "";
+    user.value.token = ""; 
+  }
 
   async function login(_username, _password) {
     const config = useRuntimeConfig().public;
@@ -40,15 +38,15 @@ export const useUserStore = defineStore("user", () => {
       });
 
       if (response.objectId) {
-        const token = useCookie("token");
-        token.value = response.sessionToken;
-        this.user.id = response.objectId;
-        this.user.username = response.username;
-        this.user.token = response.sessionToken;
+        user.value.authenticated = true
+        user.value.id = response.objectId;
+        user.value.username = response.username;
+        user.value.token = response.sessionToken;
         notification.success("User was successfully logged");
       } 
     } catch (e) {
       notification.error(e.data.error);
+      destroy();
     }    
   }
 
@@ -72,17 +70,14 @@ export const useUserStore = defineStore("user", () => {
       });
 
       if (response.objectId) {
-        const token = useCookie("token");
-        token.value = response.sessionToken;
-        this.authenticated = true;
-
-        this.user.id = response.objectId;
-        this.user.token = response.sessionToken;
+        user.value.authenticated = true;
+        user.value.id = response.objectId;
+        user.value.token = response.sessionToken;
         notification.success("User successfully created");
       }
     } catch (e) {
       notification.error(e.data.error);
-      this.destroy();
+      destroy();
     }
   }
 
@@ -90,52 +85,22 @@ export const useUserStore = defineStore("user", () => {
     const config = useRuntimeConfig().public;
     const notification = useNotificationStore();
     try {
-      const response = await $fetch(`${config.BACK4APP_URL}/logout`, {
+      await $fetch(`${config.BACK4APP_URL}/logout`, {
         method: "POST",
         headers: {
           Accept: "application/json",
           "X-Parse-Application-Id": config.BACK4APP_APPID,
           "X-Parse-REST-API-Key": config.BACK4APP_RESTAPIKEY,
-          "X-Parse-Session-Token": this.sessionToken,
+          "X-Parse-Session-Token": user.value.token,
           "X-Parse-Revocable-Session": 1,
         },
       });
-      this.destroy();
+      destroy();
     } catch (e) {
       notification.error(e.data.error);
-      //this.destroy();
+      destroy();
     }
   }  
 
-  function destroy() {
-    const token = useCookie('token');   
-    token.value = null;
-    this.authenticated = false;
-
-    this.user.id = "";
-    this.user.username = "";
-    this.user.firstName = "";
-    this.user.lastName = "";
-    this.user.occupation = "";
-    this.user.biografy = "";
-    this.user.status = "";
-    this.user.memberSince = "";
-    this.user.birthday = "";
-    this.user.gender = "";
-    this.user.mobile = "";
-    this.user.address = "";
-    this.user.email = "";
-    this.user.profilePicture = "";
-    this.user.token = ""; 
-  }
-
-  function isAuthenticated () {
-    return this.authenticated
-  }
-
-  function setAuthenticated (a) {
-    this.authenticated = a
-  }  
-
-  return { user, register, login, logout, isAuthenticated, setAuthenticated }
-});
+  return { user, register, login, logout }
+}, {persist: true});
