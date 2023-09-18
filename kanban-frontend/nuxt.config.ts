@@ -4,8 +4,18 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
     '@vueuse/nuxt'
-  ],  
+  ], 
+  piniaPersistedstate: {
+    cookieOptions: {
+      sameSite: 'strict',
+    },
+    storage: 'localStorage'
+  }, 
+  build: {
+    transpile: ['pinia-plugin-persistedstate'],
+  },    
   runtimeConfig: {
     public: {
       NUXT_SECRET: process.env.NUXT_SECRET,
