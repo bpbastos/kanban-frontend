@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class="flex items-center gap-2">
-      <BoardSwitcher :key="boardSwitcherUpdate"/>
+
+    <div class="flex items-center gap-2 pb-8">
+      <BoardSwitcher :key="boardSwitcherUpdate" />
       <div class="flex flex-row w-4/12">
         <AddNewBoard :show="showAddBoardForm" @canceled="showAddBoardForm = false" @added="addedNewBoard" />
         <button class="btn btn-primary" @click.stop="showAddBoardForm = !showAddBoardForm" v-if="!showAddBoardForm">
@@ -12,6 +13,11 @@
         </button>
       </div>
     </div>
+  </div>
+  <div class="flex flex-wrap justify-strech gap-3 pb-8">
+    <!-- To pass the tailwind color classes via v-bind it's needed to put the classes on safelist in tailwind.config.js file -->
+    <WorkflowCard v-for="workflow in workflows" :workflow="workflow" :board-id="board.id" :key="workflow.id"
+      @update-tasks="refetch()" />
   </div>
 </template>
 <script setup>
@@ -59,14 +65,14 @@ const route = useRoute()
 
 const boardId = ref(route.params.id)
 
-const { result, refetch } = useQuery(BOARD_QUERY, ()=>({id:boardId.value}))
+const { data } = useAsyncQuery(BOARD_QUERY, { id: route.params.id })
 
-const board = computed(()=>{
-  return result.value?.data?.board ?? null
+const board = computed(() => {
+  return data.value?.board ?? null
 })
 
-const workflows = computed(()=>{
-  return result.value?.data?.board?.workflows ?? []
+const workflows = computed(() => {
+  return data.value?.board?.workflows ?? []
 })
 
 const addedNewBoard = () => {
