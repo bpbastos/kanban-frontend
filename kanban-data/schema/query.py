@@ -1,5 +1,5 @@
 
-from typing import List
+from typing import List, Optional
 from sqlalchemy import select
 import strawberry
 
@@ -40,26 +40,21 @@ class Query:
         return [Priority.marshal(priority) for priority in db_priorities]    
 
     @strawberry.field()
-    async def board(self, info: Info, id: strawberry.ID) -> Board:
+    async def board(self, info: Info, id: Optional[strawberry.ID] = None) -> Board:
         user_id = info.context.user.get('id')
         #if not user_id:
         #    return UserNotFound()
         
         async with get_session() as s:
-            sql = select(BoardModel).filter(BoardModel.id == id).filter(BoardModel.user_id == user_id)
+            sql = select(BoardModel).filter(BoardModel.user_id == user_id)\
+                                        .order_by(BoardModel.created_at.desc())
+            if id:
+                sql = select(BoardModel).filter(BoardModel.id == id) \
+                                        .filter(BoardModel.user_id == user_id)
+                
             db_board = (await s.execute(sql)).scalars().first()
-        return Board.marshal(db_board)
 
-    @strawberry.field()
-    async def get_last_added_board(self, info: Info) -> Board:
-        user_id = info.context.user.get('id')
-        #if not user_id:
-        #    return UserNotFound()
-        print (user_id)
-        async with get_session() as s:
-            sql = select(BoardModel).filter(BoardModel.user_id == user_id).order_by(BoardModel.created_at.desc())
-            db_board = (await s.execute(sql)).scalars().first()
-        return Board.marshal(db_board)        
+        return Board.marshal(db_board)
 
     @strawberry.field()
     async def task(self, info: Info, id: strawberry.ID) -> Task:
