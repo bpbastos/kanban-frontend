@@ -47,8 +47,19 @@ class Query:
         
         async with get_session() as s:
             sql = select(BoardModel).filter(BoardModel.id == id).filter(BoardModel.user_id == user_id)
-            db_board = (await s.execute(sql)).scalars().unique().one_or_none()
+            db_board = (await s.execute(sql)).scalars().first()
         return Board.marshal(db_board)
+
+    @strawberry.field()
+    async def get_last_added_board(self, info: Info) -> Board:
+        user_id = info.context.user.get('id')
+        #if not user_id:
+        #    return UserNotFound()
+        print (user_id)
+        async with get_session() as s:
+            sql = select(BoardModel).filter(BoardModel.user_id == user_id).order_by(BoardModel.created_at.desc())
+            db_board = (await s.execute(sql)).scalars().first()
+        return Board.marshal(db_board)        
 
     @strawberry.field()
     async def task(self, info: Info, id: strawberry.ID) -> Task:
@@ -58,5 +69,5 @@ class Query:
         
         async with get_session() as s:
             sql = select(TaskModel).filter(TaskModel.id == id).filter(TaskModel.user_id == user_id).order_by(TaskModel.created_at.desc())
-            db_task = (await s.execute(sql)).scalars().unique().one_or_none()
+            db_task = (await s.execute(sql)).scalars().first()
         return Task.marshal(db_task)      
