@@ -24,6 +24,9 @@
   </details>  
   </template>
   <script setup>
+  const selectedItem = ref('')
+  const dropdown = ref(null)
+  const emit = defineEmits(['change','loaded'])
 
   const BOARDS_QUERY = gql`
     query getBoards {
@@ -47,11 +50,7 @@
     return _boards
   })
   
-  const selectedItem = ref('')
-  const dropdown = ref(null)
-    
-  const emit = defineEmits(['change','loaded'])
-  
+ 
   const closeDropdown = () => {
     if (dropdown.value.open)
       dropdown.value.removeAttribute('open')  
@@ -61,7 +60,6 @@
     selectedItem.value = boardName
     closeDropdown()
     emit('change', boardId)
-    //router.push({ name: 'Board', params: { id: boardId } })  
   }
   
   onClickOutside(dropdown, (event) => {

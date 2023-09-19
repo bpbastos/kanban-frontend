@@ -68,7 +68,7 @@ const addNewBoard = async() => {
       name: newBoardName.value.trim()
     })
     if (res) {
-      emit('added', res.data.id)
+      emit('added', res.data?.addBoard?.id)
       newBoardName.value = ""   
     } 
   }    
