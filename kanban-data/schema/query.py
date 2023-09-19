@@ -24,7 +24,7 @@ class Query:
         #    return UserNotFound()
         
         async with get_session() as s:
-            sql = select(BoardModel).filter(BoardModel.user_id == user_id)
+            sql = select(BoardModel).filter(BoardModel.user_id == user_id).order_by(BoardModel.created_at.desc())
             db_boards = (await s.execute(sql)).scalars().unique().all()
         return [Board.marshal(board) for board in db_boards]
 
@@ -35,7 +35,7 @@ class Query:
         #    return UserNotFound()
         
         async with get_session() as s:
-            sql = select(PriorityModel).filter(PriorityModel.user_id == user_id)
+            sql = select(PriorityModel).filter(PriorityModel.user_id == user_id).order_by(PriorityModel.created_at.desc())
             db_priorities = (await s.execute(sql)).scalars().unique().all()
         return [Priority.marshal(priority) for priority in db_priorities]    
 
@@ -57,6 +57,6 @@ class Query:
         #    return UserNotFound()
         
         async with get_session() as s:
-            sql = select(TaskModel).filter(TaskModel.id == id).filter(TaskModel.user_id == user_id)
+            sql = select(TaskModel).filter(TaskModel.id == id).filter(TaskModel.user_id == user_id).order_by(TaskModel.created_at.desc())
             db_task = (await s.execute(sql)).scalars().unique().one_or_none()
         return Task.marshal(db_task)      
