@@ -27,6 +27,7 @@
   const selectedItem = ref('')
   const dropdown = ref(null)
   const emit = defineEmits(['change','loaded'])
+  const router = useRouter()
 
   const BOARDS_QUERY = gql`
     query getBoards {
