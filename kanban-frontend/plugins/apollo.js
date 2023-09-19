@@ -21,8 +21,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     };
   });
 
-  console.log(user.id)
-
   // Cache implementation
   const cache = new InMemoryCache();
 

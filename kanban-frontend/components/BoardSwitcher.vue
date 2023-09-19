@@ -15,7 +15,7 @@
       </summary>
       <ul
         tabindex="0"
-        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box text-base"
+        class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box text-base"
       >
         <li>
           <a v-for="board in boards" @click="changeSelected(board.id,board.name)">{{ board.name }}</a>
@@ -40,7 +40,6 @@
   
   const boards = computed(()=>{
     const _boards = []
-    console.log(data.value)
     data.value?.boards?.map((b)=>{
       _boards.push(b)
     })

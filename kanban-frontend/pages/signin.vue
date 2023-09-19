@@ -48,7 +48,7 @@
 import { useUserStore } from '@/store/user';
 import { useNotificationStore } from '@/store/notification';
 
-const { user, login } = useUserStore();
+const { login } = useUserStore();
 const { getLastNotification } = useNotificationStore();
 
 const password = ref('')
@@ -56,8 +56,9 @@ const username = ref('')
 const error = ref('')
 
 const signIn = async () => {
-    await login(username.value, password.value)
-    if (user.token) {
+    const success = await login(username.value, password.value)
+
+    if (success) {
         await navigateTo('/board')
     } else {
        error.value = getLastNotification()

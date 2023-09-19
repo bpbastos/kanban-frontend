@@ -49,7 +49,7 @@
 import { useUserStore } from '@/store/user';
 import { useNotificationStore } from '@/store/notification';
 
-const { user, register } = useUserStore();
+const { register } = useUserStore();
 const { getLastNotification } = useNotificationStore();
 
 const email = ref('')
@@ -58,9 +58,8 @@ const username = ref('')
 const error = ref('')
 
 const signUp = async () => {
-    await register(username.value, email.value, password.value)
-    if (user.token) {
-        console.log(user.token)
+    const success = await register(username.value, email.value, password.value)
+    if (success) {
         await navigateTo('/board')
     } else {
        error.value = getLastNotification()
