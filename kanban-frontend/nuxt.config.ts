@@ -29,8 +29,9 @@ export default defineNuxtConfig({
     BACK4APP_URL: process.env.BACK4APP_URL,
     BACK4APP_APPID: process.env.BACK4APP_APPID,
     BACK4APP_RESTAPIKEY: process.env.BACK4APP_RESTAPIKEY,
-    KANBANDATA_URL: process.env.KANBANDATA_URL,
-    KANBANDATA_TOKENNAME:process.env.KANBANDATA_TOKENNAME
+    public: {
+      KANBANDATA_URL: process.env.KANBANDATA_URL
+    }
   },
   vite: {
     server: {
