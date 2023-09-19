@@ -11,7 +11,7 @@ class Priority(BaseModel):
     name = Column(String(40), nullable=False)
     color = Column(String(20), nullable=False)
     
-    tasks = relationship("Task", back_populates="priority", lazy="joined")
+    tasks = relationship("Task", back_populates="priority", lazy="joined", order_by="Task.created_at")
 
     def __init__(self, name, color, user_id):
         self.name = name

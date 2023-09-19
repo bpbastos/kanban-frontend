@@ -15,7 +15,7 @@ class SubTask(BaseModel):
     
     task_id = Column(GUID, ForeignKey(Task.id), nullable=False)
 
-    task = relationship("Task", back_populates="subtasks", lazy="joined")
+    task = relationship("Task", back_populates="subtasks", lazy="joined", order_by="Task.created_at")
 
     def __init__(self, title, order, done, task_id, user_id):
         self.title = title

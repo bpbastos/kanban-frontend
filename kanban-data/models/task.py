@@ -20,7 +20,7 @@ class Task(BaseModel):
 
     workflow = relationship("Workflow", back_populates="tasks", lazy="joined")
     priority = relationship("Priority", back_populates="tasks", lazy="joined")
-    subtasks = relationship("SubTask", back_populates="task", cascade="all, delete-orphan", lazy="joined")
+    subtasks = relationship("SubTask", back_populates="task", cascade="all, delete-orphan", lazy="joined", order_by="SubTask.created_at")
 
     def __init__(self, title, priority_id, workflow_id, user_id):
         self.title = title
