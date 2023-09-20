@@ -61,6 +61,10 @@ class DeleteTaskResponse(BaseResponse):
 class DeleteSubTaskResponse(BaseResponse): 
     id: strawberry.ID
 
+@strawberry.type
+class UpdateTaskResponse(BaseResponse):    
+    id: strawberry.ID    
+
 
 @strawberry.type
 class Mutation:
@@ -98,6 +102,19 @@ class Mutation:
             await s.flush()
             await s.commit() 
         return AddTaskResponse(id=new_task.id)
+
+    @strawberry.mutation
+    async def update_task(self, info: Info, id: strawberry.ID, title:str, description:str, priority_id: strawberry.ID) -> AddTaskResponse:
+        user_id = info.context.user.get('id')
+        async with get_session() as s:
+            sql = select(TaskModel).filter(TaskModel.id == id)
+            db_task = (await s.execute(sql)).scalars().unique().one_or_none()
+            if db_task:
+                db_task.title = title
+                db_task.description = description
+                db_task.priority_id = priority_id
+            await s.commit() 
+        return UpdateTaskResponse(id=db_task.id)
 
     @strawberry.mutation
     async def delete_task(self, info: Info, task_id: strawberry.ID) -> DeleteTaskResponse:
