@@ -156,5 +156,4 @@ class Mutation:
 
                 await s.delete(db_sub_task)       
                 await s.commit() 
-        return DeleteSubTaskResponse(id=db_sub_task.id)         
-    
+        return DeleteSubTaskResponse(id=db_sub_task.id)
