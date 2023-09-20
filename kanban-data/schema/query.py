@@ -35,7 +35,7 @@ class Query:
         #    return UserNotFound()
         
         async with get_session() as s:
-            sql = select(PriorityModel).filter(PriorityModel.user_id == user_id).order_by(PriorityModel.created_at.desc())
+            sql = select(PriorityModel).order_by(PriorityModel.created_at.desc())
             db_priorities = (await s.execute(sql)).scalars().unique().all()
         return [Priority.marshal(priority) for priority in db_priorities]    
 
