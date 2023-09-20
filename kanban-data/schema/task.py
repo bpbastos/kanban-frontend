@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 class Task:
     id: strawberry.ID
     title: str
+    description: str    
     total_sub_tasks: int
     total_sub_tasks_done: int
     priority: Annotated["Priority", strawberry.lazy(".priority")]
@@ -25,6 +26,7 @@ class Task:
         return cls(
             id=strawberry.ID(str(model.id)),
             title=model.title,
+            description=model.description,
             total_sub_tasks=model.total_sub_tasks,
             total_sub_tasks_done=model.total_sub_tasks_done,
             priority=model.priority,
