@@ -129,10 +129,13 @@ class Mutation:
             sql = select(SubTaskModel).filter(SubTaskModel.id == sub_task_id)
             db_sub_task = (await s.execute(sql)).scalars().unique().one_or_none()
             if db_sub_task:
-                db_sub_task.done = True
                 sql = select(TaskModel).filter(TaskModel.id == db_sub_task.task_id)
                 db_task = (await s.execute(sql)).scalars().unique().one_or_none()
-                db_task.total_sub_tasks_done += 1
+                db_sub_task.done = not db_sub_task.done
+                if db_sub_task.done:
+                    db_task.total_sub_tasks_done += 1
+                elif db_task.total_sub_tasks_done > 0:
+                    db_task.total_sub_tasks_done -= 1
                 await s.commit() 
         return MarkSubTaskDoneResponse(id=db_sub_task.id)   
 
