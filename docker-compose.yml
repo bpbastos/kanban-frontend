@@ -1,0 +1,37 @@
+version: '3.1'
+
+volumes:
+  db-storage:
+    driver: local
+
+services:
+  db:
+    container_name: db
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=kanban
+      - POSTGRES_PASSWORD=kanbanpass
+      - POSTGRES_DB=kanban
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432:5432"      
+    volumes: 
+      - db-storage:/var/lib/postgresql/data    
+
+  data:
+    container_name: data
+    build: kanban-data/.
+    restart: always
+    environment:
+      - FRONTEND_URL=http://localhost:3000
+    ports:
+      - 8000:8000
+    expose:
+      - 8000:8000      
+    depends_on:
+      - db
+    links:
+      - db
+        
