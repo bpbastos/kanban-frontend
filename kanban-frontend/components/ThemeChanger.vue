@@ -18,7 +18,6 @@ const colorMode = useColorMode();
 
 const selectTheme = (t) => {
     colorMode.preference = t
-    console.log(t)
     closeDropdown()
 }
 
