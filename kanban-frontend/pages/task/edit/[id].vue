@@ -65,43 +65,44 @@ const props = defineProps({
 })
 
 const TASK_QUERY = gql`
-   query getTask($id: ID!) {
-     task(id:$id)
-     {
+query getTask($id: ID!) {
+  task(id: $id) {
+    ... on Task {
       id
-       title
-       description
-       totalSubTasks
-       totalSubTasksDone
-       workflow {
-         ...on Workflow {
-           id
-           name
-           color
-           board {
-           	...on Board {
+      title
+      description
+      totalSubTasks
+      totalSubTasksDone
+      workflow {
+        ... on Workflow {
+          id
+          name
+          color
+          board {
+            ... on Board {
               id
             }
-        	 }
-         }
-       }
-       priority {
-         ...on Priority {
-           id
-           name
-           color
-         }
-       }
-       subtasks {
-         ...on SubTask {
-           id
-           title
-           order
-           done
-         }
-       }
+          }
+        }
+      }
+      priority {
+        ... on Priority {
+          id
+          name
+          color
+        }
+      }
+      subtasks {
+        ... on SubTask {
+          id
+          title
+          order
+          done
+        }
+      }
     }
   }
+}
  `
 const UPDATE_TASK_MUTATION = gql`
  mutation updateTask ($id: ID!, $title: String!, $description: String!, $priorityId: ID!) {
