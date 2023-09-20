@@ -52,7 +52,7 @@ const deleteTask = async () => {
     }
 }
 
-const goToEditTask = () => {
-    router.push({ name: 'EditTask', params: { id: props.task.id } })
+const goToEditTask = async() => {
+    navigateTo(`/task/edit/${props.task.id}`)
 }
 </script>
