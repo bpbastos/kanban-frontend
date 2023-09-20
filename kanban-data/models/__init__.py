@@ -26,7 +26,7 @@ if not os.path.exists(DATABASE_PATH):
 # url de acesso ao banco (essa é uma url de acesso ao sqlite local)
 #DATABASE_URL = 'sqlite+aiosqlite:///%s/kanban.db' % DATABASE_PATH 
 #postgresql+asyncpg://postgres:kanbandb@localhos:5432/kanban
-DATABASE_URL = 'postgresql+asyncpg://kanban:kanbanpass@localhost:5432/kanban'
+DATABASE_URL = 'postgresql+asyncpg://kanban:kanbanpass@db:5432/kanban'
 
 # cria a engine de conexão assíncrona com o banco
 engine = create_async_engine(
@@ -55,7 +55,7 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
 
 async def _async_main():
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
+        #await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
         await conn.execute(
             insert(Priority), [
