@@ -1,5 +1,22 @@
 module.exports = {
-    content: ["./index.html","./src/**/*.{vue,js,ts,jsx,tsx}"],
+    plugins: [require("daisyui")],  
+    daisyui: {
+      themes: [
+        'corporate',
+        'dark',
+        'lofi',
+        'light',
+        'cupcake',
+        'bumblebee',
+        'emerald',
+        'retro',
+        'cyberpunk',
+        'pastel',
+        'fantasy',
+        'black',
+        'business'
+      ],
+    },     
     safelist: [
       'bg-purple-400',
       'bg-orange-400',
@@ -26,6 +43,5 @@ module.exports = {
       'alert-success',
       'alert-warning',
       'alert-error'
-    ],      
-    plugins: [require("daisyui")],
+    ]  
 }

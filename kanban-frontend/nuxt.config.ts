@@ -3,11 +3,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/apollo'
   ], 
+  colorMode: {
+    preference: 'corporate', // default theme
+    dataValue: 'theme', // activate data-theme in <html> tag
+  },  
   piniaPersistedstate: {
     cookieOptions: {
       sameSite: 'strict',

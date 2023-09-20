@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen flex items-center justify-center">
-        <div class="card w-96 bg-primary-content shadow-xl">
+        <div class="card w-96 shadow-xl">
             <div class="card-body justify-center">
                 <h1 class="text-3xl font-semibold text-center text-gray-700">Kanban App</h1>
                 <div class="divider">Cadastre-se</div>
