@@ -91,7 +91,7 @@ class Mutation:
     async def add_task(self, info: Info, title:str, workflow_id: strawberry.ID) -> AddTaskResponse:
         user_id = info.context.user.get('id')
         async with get_session() as s:
-            sql = select(PriorityModel).filter(PriorityModel.name == "Baixa").filter(PriorityModel.user_id == user_id)
+            sql = select(PriorityModel).filter(PriorityModel.name == "Baixa")
             db_priority = (await s.execute(sql)).scalars().unique().one_or_none()
             new_task = TaskModel(title=title,priority_id=db_priority.id,workflow_id=workflow_id, user_id=user_id)
             s.add(new_task)
