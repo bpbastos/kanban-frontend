@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="flex items-center gap-2 pb-8">
-        <BoardSwitcher :key="boardSwitcherUpdate" @change="changeBoard" />
+        <BoardSwitcher :key="boardSwitcherUpdate" @change="changeBoard" :current-board-id="boardId"/>
         <div class="flex flex-row w-4/12">
           <AddNewBoard :show="showAddBoardForm" @canceled="showAddBoardForm = false" @added="addedNewBoard" />
           <button class="btn btn-primary" @click.stop="showAddBoardForm = !showAddBoardForm" v-if="!showAddBoardForm">
@@ -19,8 +19,7 @@
       </div>
     </div>
   </template>
-  <script setup>
-  
+  <script setup>  
   const showAddBoardForm = ref(false)
   const boardSwitcherUpdate = ref(0)
   
@@ -80,7 +79,8 @@
   }
   
   const changeBoard = (_boardId) => {
-    boardId.value = _boardId
+    //boardId.value = _boardId
+    navigateTo(`/board/${_boardId}`)
   }
   
   definePageMeta({
