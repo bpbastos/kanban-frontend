@@ -25,11 +25,13 @@ const emit = defineEmits(['change'])
 
 const PRIORITIRES_QUERY = gql`
 query getPriority {
-    priorities {
-        id
-        name
-        color
+  priorities {
+    ... on Priority {
+      id
+      name
+      color
     }
+  }
 }
 `
 
