@@ -1,4 +1,5 @@
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import insert
 import asyncio
 import os
 
@@ -56,4 +57,11 @@ async def _async_main():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
+        await conn.execute(
+            insert(Priority), [
+                {"name": "Baixa", "color":"info", "user_id":"none"},
+                {"name": "Média", "color":"warning", "user_id":"none"},
+                {"name": "Alta", "color":"error", "user_id":"none"},
+            ]
+        )
     await engine.dispose()
