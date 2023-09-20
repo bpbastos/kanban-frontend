@@ -60,11 +60,9 @@ const BOARD_QUERY = gql`
     }
 `
 
-const route = useRoute()
-
 const boardId = ref("")
 
-const { result: data } = useQuery(BOARD_QUERY, () => ({ id: boardId.value }))
+const { result: data, refetch } = useQuery(BOARD_QUERY, () => ({ id: boardId.value }))
 
 const board = computed(() => {
   return data.value?.board ?? null
@@ -81,7 +79,6 @@ const addedNewBoard = () => {
 
 const changeBoard = (_boardId) => {
   boardId.value = _boardId
-
 }
 
 definePageMeta({
