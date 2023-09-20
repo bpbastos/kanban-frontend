@@ -31,9 +31,13 @@ export const useUserStore = defineStore(
           password: _password,
         }),
       });
-
+      
       if (!response.error) {
-        user.value = response;
+        user.value.id = response.id;
+        user.value.username = response.username;
+        user.value.profilePicture = response.profilePicture;
+        user.value.token = response.token;
+        user.value.authenticated = response.authenticated;
         notification.success("User was successfully logged");
         return true;
       } else {
