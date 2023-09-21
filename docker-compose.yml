@@ -10,9 +10,9 @@ services:
     image: postgres:16
     restart: always
     environment:
-      - POSTGRES_USER=kanban
-      - POSTGRES_PASSWORD=kanbanpass
-      - POSTGRES_DB=kanban
+      - POSTGRES_USER=${KANBANDATA_DB_USER}
+      - POSTGRES_PASSWORD=${KANBANDATA_DB_PASSWORD}
+      - POSTGRES_DB=${KANBANDATA_DB_DB}
     ports:
       - "5432:5432"
     expose:
@@ -25,7 +25,7 @@ services:
     build: kanban-data/.
     restart: always
     environment:
-      - FRONTEND_URL=http://localhost:3000
+      - FRONTEND_URL=${KANBANFRONT_URL}
     ports:
       - 8000:8000
     expose:
@@ -34,4 +34,21 @@ services:
       - db
     links:
       - db
-        
+
+  frontend:
+    container_name: frontend
+    build: kanban-frontend/.
+    restart: always
+    environment:
+      - BACK4APP_URL=${BACK4APP_URL}
+      - BACK4APP_APPID=${BACK4APP_APPID}
+      - BACK4APP_RESTAPIKEY=${BACK4APP_RESTAPIKEY}
+      - KANBANDATA_URL=${KANBANDATA_URL}
+    ports:
+      - 3000:3000
+    expose:
+      - 3000:3000      
+    depends_on:
+      - data
+    links:
+      - data             
