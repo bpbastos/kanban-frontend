@@ -9,12 +9,13 @@ class Board(BaseModel):
 
     id = Column(GUID, primary_key=True, server_default=GUID_SERVER_DEFAULT_POSTGRESQL)
     name = Column(String(40), nullable=False)
+    user_id = Column(String, nullable=False)
 
     workflows = relationship("Workflow", back_populates="board",  cascade="all, delete-orphan", lazy="joined", order_by="Workflow.created_at")
 
     def __init__(self, name, user_id):
         self.name = name
-        super().__init__(user_id)
+        self.user_id = user_id
 
     def to_dict(self):
         return {

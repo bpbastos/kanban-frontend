@@ -7,8 +7,7 @@ Base = declarative_base()
 
 class BaseModel(Base):
     __abstract__ = True
-
-    user_id = Column(String, nullable=False)
+    
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     
     def __init__(self, user_id):

@@ -18,11 +18,10 @@ class Workflow(BaseModel):
     board = relationship("Board", back_populates="workflows", lazy="joined")
     tasks = relationship("Task", back_populates="workflow", cascade="all, delete-orphan", lazy="joined")
 
-    def __init__(self, color, name, board_id, user_id):
+    def __init__(self, color, name, board_id):
         self.color = color
         self.name = name
         self.board_id = board_id
-        super().__init__(user_id)
 
     def to_dict(self):
         return {

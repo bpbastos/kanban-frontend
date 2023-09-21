@@ -17,12 +17,11 @@ class SubTask(BaseModel):
 
     task = relationship("Task", back_populates="subtasks", lazy="joined", order_by="Task.created_at")
 
-    def __init__(self, title, order, done, task_id, user_id):
+    def __init__(self, title, order, done, task_id):
         self.title = title
         self.order = order
         self.done = done
         self.task_id = task_id
-        super().__init__(user_id)
 
     def to_dict(self):
         return {

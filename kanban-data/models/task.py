@@ -22,12 +22,11 @@ class Task(BaseModel):
     priority = relationship("Priority", back_populates="tasks", lazy="joined")
     subtasks = relationship("SubTask", back_populates="task", cascade="all, delete-orphan", lazy="joined", order_by="SubTask.created_at")
 
-    def __init__(self, title, description, priority_id, workflow_id, user_id):
+    def __init__(self, title, description, priority_id, workflow_id):
         self.title = title
         self.description = description
         self.priority_id = priority_id
         self.workflow_id = workflow_id
-        super().__init__(user_id)
 
     def to_dict(self):
         return {

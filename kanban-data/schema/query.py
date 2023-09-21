@@ -27,19 +27,19 @@ class PriorityNotFoundResponse():
 class TaskNotFoundResponse(): 
     message: str = "Tarefa não encontrada"       
 
-BoardResponse = strawberry.union("BoardResponse", (Board, BoardNotFoundResponse, UserNotFound))    
+SearchBoardResponse = strawberry.union("BoardResponse", (Board, BoardNotFoundResponse, UserNotFound))    
 
-PriorityResponse = strawberry.union("PriorityResponse", (Priority, PriorityNotFoundResponse, UserNotFound))    
+SearchPriorityResponse = strawberry.union("PriorityResponse", (Priority, PriorityNotFoundResponse, UserNotFound))    
 
-TaskResponse = strawberry.union("TaskResponse", (Task, TaskNotFoundResponse, UserNotFound))    
+SearchTaskResponse = strawberry.union("TaskResponse", (Task, TaskNotFoundResponse, UserNotFound))    
 
 @strawberry.type
 class Query:
     @strawberry.field()
-    async def boards(self, info: Info) -> List[BoardResponse]:
+    async def boards(self, info: Info) -> List[SearchBoardResponse]:
         user_id = info.context.user.get('id')
-        #if not user_id:
-        #    return UserNotFound()
+        if not user_id:
+            return UserNotFound()
         
         async with get_session() as s:
             sql = select(BoardModel).filter(BoardModel.user_id == user_id).order_by(BoardModel.created_at.desc())
@@ -51,7 +51,7 @@ class Query:
         return [Board.marshal(board) for board in db_boards]
 
     @strawberry.field()
-    async def priorities(self, info: Info) -> List[PriorityResponse]:
+    async def priorities(self, info: Info) -> List[SearchPriorityResponse]:
         user_id = info.context.user.get('id')
         #if not user_id:
         #    return UserNotFound()
@@ -66,10 +66,10 @@ class Query:
         return [Priority.marshal(priority) for priority in db_priorities]    
 
     @strawberry.field()
-    async def board(self, info: Info, id: Optional[strawberry.ID] = None) -> BoardResponse:
+    async def board(self, info: Info, id: Optional[strawberry.ID] = None) -> SearchBoardResponse:
         user_id = info.context.user.get('id')
-        #if not user_id:
-        #    return UserNotFound()
+        if not user_id:
+            return UserNotFound()
         
         async with get_session() as s:
             sql = select(BoardModel).filter(BoardModel.user_id == user_id)\
@@ -86,13 +86,13 @@ class Query:
         return Board.marshal(db_board)
 
     @strawberry.field()
-    async def task(self, info: Info, id: strawberry.ID) -> TaskResponse:
+    async def task(self, info: Info, id: strawberry.ID) -> SearchTaskResponse:
         user_id = info.context.user.get('id')
-        #if not user_id:
-        #    return UserNotFound()
+        if not user_id:
+            return UserNotFound()
         
         async with get_session() as s:
-            sql = select(TaskModel).filter(TaskModel.id == id).filter(TaskModel.user_id == user_id).order_by(TaskModel.created_at.desc())
+            sql = select(TaskModel).filter(TaskModel.id == id).order_by(TaskModel.created_at.desc())
             db_task = (await s.execute(sql)).scalars().first()
 
             if not db_task:

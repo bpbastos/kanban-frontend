@@ -13,10 +13,9 @@ class Priority(BaseModel):
     
     tasks = relationship("Task", back_populates="priority", lazy="joined", order_by="Task.created_at")
 
-    def __init__(self, name, color, user_id):
+    def __init__(self, name, color):
         self.name = name
         self.color = color
-        super().__init__(user_id)
 
     def to_dict(self):
         return {

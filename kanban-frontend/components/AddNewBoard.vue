@@ -50,8 +50,14 @@ mutation addNewBoard ($name: String!) {
         }    
     )
     {
-        id
+  	 ...on AddBoardSuccess {
+      id
     }
+    ...on UserNotFound {
+      code
+      message
+    }
+  }
 } 
 `
 const { mutate: addNewBoardMutation } = useMutation(CREATE_BOARD_MUTATION);    
