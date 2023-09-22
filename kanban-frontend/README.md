@@ -1,63 +1,71 @@
-# Nuxt 3 Minimal Starter
+# Kanban App 
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[![Package - vue](https://img.shields.io/github/package-json/dependency-version/bpbastos/kanban-app/vue?color=green)](https://www.npmjs.com/package/vue)
+[![Package - @vueuse/core](https://img.shields.io/github/package-json/dependency-version/bpbastos/kanban-app/@vueuse/core?color=green)](https://www.npmjs.com/package/@vueuse/core)
+[![Package - pinia](https://img.shields.io/github/package-json/dependency-version/bpbastos/kanban-app/pinia?color=yellow)](https://www.npmjs.com/package/pinia)
+[![Package - tailwindcss](https://img.shields.io/github/package-json/dependency-version/bpbastos/kanban-app/dev/tailwindcss?color=blue)](https://www.npmjs.com/package/tailwindcss)
+[![Package - daisyui](https://img.shields.io/github/package-json/dependency-version/bpbastos/kanban-app/dev/daisyui?color=purple)](https://www.npmjs.com/package/daisyui)
 
-## Setup
+<img src="screenshot/board.jpg" alt="Tela principal">
 
-Make sure to install the dependencies:
+> Frontend para a aplicação web de gerenciamento de projetos com o uso de Kanban. Este frontend foi construído utilizando as tecnologias Nuxt 3, Vue 3, Tailwind CSS e DaisyUI, e se integra com duas APIs distintas. Uma delas é uma API RESTful responsável pelo gerenciamento de usuários, fornecida pelo serviço de BaaS (Backend As A Service) oferecido pelo provedor https://www.back4app.com/. A segunda API é uma API GraphQL fornecida pelo serviço kanban-data que você encontra nesse mesmo repositório.
 
-```bash
-# npm
-npm install
+> Este frontend foi desenvolvido como uma parte do trabalho de conclusão do terceiro e último módulo - Desenvolvimento Backend Avançado - da Pós-Graduação em Desenvolvimento FullStack da PUC-RIO. 
 
-# pnpm
-pnpm install
 
-# yarn
-yarn install
+## Funcionalidades
+
+- [x] Listar quadros.
+- [x] Criar tarefa.
+- [x] Editar tarefa.
+- [x] Excluir tarefa.
+- [x] Adicionar sub tarefas.
+- [x] Exibir informações do perfil de usuário.
+- [x] Implementar backend real.
+- [x] Login de usuário.
+- [x] Registro de usuários.
+- [x] Criar novo quadro.
+- [x] Gerenciador de temas
+- [x] Sistema de notificação.
+
+## Todo
+
+- [ ] Arquivar quadros.
+- [ ] Criar/Editar/Arquivar workflows|status.
+- [ ] Arquivar tarefas.
+- [ ] Reordenar tarefas.
+- [ ] Reordenar sub tarefas.
+- [ ] Arrastar tarefas entre workflows|status.
+- [ ] Layout Responsivo no mobile.
+- [ ] Validação nos formulários.
+
+
+## 💻 Pré-requisitos
+
+Antes de começar, verifique se o seu ambiente atende aos seguintes requisitos:
+
+> ATENÇÃO, este frontend requer que os serviços de gerenciamento de usuários (Back4app) e de dados (Kanban-Data) estejam em execução antes de iniciar. Recomendo seguir as instruções contidas no README do repositório de implantação - https://github.com/bpbastos/kanban-ms - para garantir uma configuração adequada.
+
+* `Docker`
+
+> Instalação do docker: https://docs.docker.com/engine/install/
+
+Crie um arquivo .env na raiz do diretório kanban-frontend com as seguintes variáveis:
+
+```env
+BACK4APP_URL=https://parseapi.back4app.com
+BACK4APP_APPID=chave-appid-do-back4app
+BACK4APP_RESTAPIKEY=chave-restapikey-do-back4app
+KANBANDATA_URL=url-do-servico-graphql-kanbandata
+NUXT_SECRET=chave-com-32-caracteres
 ```
 
-## Development Server
+## 🚀 Rodando
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
+No diretório kanban-frontend em um terminal, execute:
+```sh
+docker build -t kanban-frontend:1.0 .
+docker run -d --env-file ./.env -p 3000:3000 --name frontend kanban-frontend:1.0 
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Abra o endereço http://localhost:3000/ no seu navegador.
