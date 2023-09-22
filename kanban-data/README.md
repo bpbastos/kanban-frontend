@@ -23,6 +23,7 @@
 
 ## Todo
 
+- [ ] Criar model para o usuário e evitar de usar o ID do Back4app
 - [ ] Autenticação/Autorização via serviço de gerência de usuário ou api gateway
 
 ## 💻 Pré-requisitos
