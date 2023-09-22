@@ -1,5 +1,5 @@
 # Kanban MS (Micro Services) 
-<img src="screenshot/graphiql.png" alt="Tela principal">
+<img src="images/diagrama.png" alt="Diagrama de implantação">
 
 > Projeto de implantação por meio da orquestração com Docker Compose. O propósito deste projeto é realizar a implantação local dos seguintes micro-serviços: "kanban-frontend" e "kanban-data", ambos encontrados nesse repositório, além de configurá-los para utilizar o serviço de gerenciamento de usuários externo, o Back4app (disponível em https://back4app.com). Esses três micro-serviços fazem parte da aplicação web de gestão de projetos baseada no método Kanban. 
 
@@ -9,6 +9,7 @@
 
 - [ ] Separar projetos em repositórios git diferentes
 - [ ] Desenvolver API Gateway (Apollo Federation)
+- [ ] Substituir o Back4app pelo projeto open source Parse Server - https://github.com/parse-community/parse-server
 
 ## 💻 Pré-requisitos
 
@@ -18,9 +19,9 @@ Antes de começar, verifique se o seu ambiente atende aos seguintes requisitos:
 
 > Instalação do docker: https://docs.docker.com/engine/install/
 
-* `Conta no BaaS - Back4app - https://back4app.com`
+* `Conta no BaaS - Back4app`
 
-> Você precisa criar uma conta gratuita no Back4app e recuperar as seguintes Keys:
+> Você precisa criar uma conta gratuita no Back4app (https://back4app.com) e recuperar as seguintes Keys:
 
 ```
 APPLICATION_ID
