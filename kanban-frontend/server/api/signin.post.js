@@ -16,13 +16,19 @@ export default defineEventHandler(async (event) => {
         "X-Parse-Revocable-Session": 1,
       },
     });
-
+    if (!response.error) {
+      return {
+        id: response.objectId,
+        username: response.username,
+        token: response.sessionToken,
+        profilePicture: '/images/avatar.jpg',
+        authenticated: true,
+      };
+    }
     return {
-      id: response.objectId,
-      username: response.username,
-      token: response.sessionToken,
-      profilePicture: '/images/avatar.jpg',
-      authenticated: true,
+      code: response.code,
+      error: response.error,      
+      authenticated: false,
     };
   } catch (error) {
     return {

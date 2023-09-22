@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const body = await readBody(event);
   try {
-    await $fetch(`${config.BACK4APP_URL}/logout`, {
+    const response = await $fetch(`${config.BACK4APP_URL}/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,9 +12,14 @@ export default defineEventHandler(async (event) => {
         "X-Parse-Revocable-Session": 1,
       },
     });
-
+    if (!response.error) {
+      return {
+        success: true
+      };
+    }
     return {
-      success: true
+      code: e.data.code,
+      error: e.data.error
     };
   } catch (e) {
     return {
