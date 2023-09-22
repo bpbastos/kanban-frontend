@@ -37,6 +37,16 @@ Antes de começar, verifique se o seu ambiente atende aos seguintes requisitos:
 
 ## 🚀 Rodando
 
+Faça clone do projeto:
+```
+git clone https://github.com/bpbastos/kanban-ms.git
+```
+
+Acesse o diretório do projeto com:
+```
+cd kanban-ms/kanban-data
+```
+
 Crie um arquivo .env na raiz do diretório kanban-data com as seguintes variáveis:
 
 ```env
