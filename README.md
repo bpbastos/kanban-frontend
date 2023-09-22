@@ -20,7 +20,7 @@ Antes de começar, verifique se o seu ambiente atende aos seguintes requisitos:
 
 * `Conta no BaaS - Back4app - https://back4app.com`
 
-> Você precisa criar uma conta gratuito no Back4app e consegui as Keys:
+> Você precisa criar uma conta gratuita no Back4app e recuperar as seguintes Keys:
 
 ```
 APPLICATION_ID
