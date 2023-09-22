@@ -20,12 +20,15 @@ export default defineNuxtConfig({
     storage: 'cookies'
   }, 
   build: {
-    transpile: ['pinia-plugin-persistedstate']
+    transpile: [
+      'pinia-plugin-persistedstate',
+      'tslib'
+    ]
   },    
   apollo: {
     clients: {
       default: {
-        httpEndpoint: process.env.KANBANDATA_URL,
+        httpEndpoint: "http://localhost:8000/graphql",
       }
     },
   }, 

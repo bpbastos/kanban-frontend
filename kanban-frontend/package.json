@@ -9,21 +9,20 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "@nuxtjs/apollo": "^5.0.0-alpha.6",
-    "@nuxtjs/color-mode": "^3.3.0",
-    "@nuxtjs/tailwindcss": "^6.8.0",
-    "@pinia-plugin-persistedstate/nuxt": "^1.1.2",
-    "@vueuse/core": "^10.4.1",
-    "@vueuse/nuxt": "^10.4.1",
-    "daisyui": "^3.7.3",
-    "nuxt": "^3.7.1"
+    "@nuxt/devtools": "latest"
   },
   "overrides": {
     "vue": "latest"
   },
   "dependencies": {
+    "@nuxtjs/apollo": "^5.0.0-alpha.6",
+    "@nuxtjs/color-mode": "^3.3.0",
+    "@nuxtjs/tailwindcss": "^6.8.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.1.2",
+    "@vueuse/nuxt": "^10.4.1",
     "@pinia/nuxt": "^0.4.11",
-    "pinia": "^2.1.6"
+    "daisyui": "^3.7.3",    
+    "pinia": "^2.1.6",
+    "nuxt": "^3.7.1"        
   }
 }

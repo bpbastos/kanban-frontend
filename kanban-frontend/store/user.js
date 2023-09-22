@@ -72,16 +72,15 @@ export const useUserStore = defineStore(
 
     async function logout() {
       const notification = useNotificationStore();
-      const response = await $fetch("/api/signout", { method: "POST" });
-      if (!response.error) {
-        notification.success("User successfully logged off");
-        destroy();
-        return true;
-      } else {
-        notification.error(e.data.error);
-        destroy();
-        return false;
-      }
+      await $fetch("/api/signout", { 
+        method: "POST",
+        body: JSON.stringify({
+          token: user.token
+        }),
+      });
+      notification.success("User successfully logged off");
+      destroy();
+      return true;
     }
 
     return { user, register, login, logout, destroy };

@@ -4,11 +4,11 @@ import { setContext } from '@apollo/client/link/context'
 import { provideApolloClient } from '@vue/apollo-composable'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const config = useRuntimeConfig().public;
+  const config = useRuntimeConfig();
   const { user } = useUserStore();
 
   const httpLink = createHttpLink({
-    uri: config.KANBANDATA_URL,
+    uri: config.public.KANBANDATA_URL
   });
 
   // authentication headers
