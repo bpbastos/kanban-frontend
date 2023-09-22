@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 volumes:
   db-storage:
@@ -22,7 +22,8 @@ services:
 
   data:
     container_name: data
-    build: kanban-data/.
+    build: 
+      context: kanban-data/.
     restart: always
     environment:
       - FRONTEND_URL=${KANBANFRONT_URL}
@@ -33,11 +34,12 @@ services:
     depends_on:
       - db
     links:
-      - db
+      - db:db
 
   frontend:
     container_name: frontend
-    build: kanban-frontend/.
+    build: 
+      context: kanban-frontend/.
     restart: always
     environment:
       - BACK4APP_URL=${BACK4APP_URL}
@@ -46,9 +48,7 @@ services:
       - KANBANDATA_URL=${KANBANDATA_URL}
     ports:
       - 3000:3000
-    expose:
-      - 3000:3000      
     depends_on:
       - data
     links:
-      - data             
+      - data:data

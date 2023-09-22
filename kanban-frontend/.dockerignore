@@ -1,0 +1,28 @@
+# .dockerignore
+
+#Nuxt
+.nuxt
+.output
+node_modules
+
+#Various
+README.md
+tmp
+.env
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+
+# CI
+.codeclimate.yml
+.travis.yml
+.taskcluster.yml
+
+# Docker
+docker-compose.yml
+Dockerfile
+.docker
+.dockerignore

@@ -1,6 +1,26 @@
+#python
 .venv
 __pycache__
 *.sqlite3
 *.db
 *.sh
 .env
+
+#node
+# Nuxt dev/build outputs
+.output
+.nuxt
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+
+# Local env files
+.env.*
+!.env.example
