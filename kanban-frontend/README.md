@@ -15,6 +15,7 @@
 - [x] Adicionar sub tarefas.
 - [x] Implementar backend real.
 - [x] Login de usuário.
+- [x] Logout de usuário.
 - [x] Registro de usuários.
 - [x] Criar novo quadro.
 - [x] Gerenciador de temas
@@ -28,9 +29,9 @@
 - [ ] Reordenar tarefas.
 - [ ] Reordenar sub tarefas.
 - [ ] Arrastar tarefas entre workflows|status.
-- [ ] Layout Responsivo no mobile.
-- [ ] Validação nos formulários.
-- [ ] Tratamento de erro para consultas graphql
+- [ ] Layout Responsivo para mobile.
+- [ ] Validação dos formulários.
+- [ ] Tratamento de erro para consultas graphql.
 - [ ] Exibir/Editar informações do perfil de usuário.
 
 
