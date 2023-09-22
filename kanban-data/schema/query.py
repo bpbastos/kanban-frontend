@@ -51,7 +51,7 @@ class Query:
         return [Board.marshal(board) for board in db_boards]
 
     @strawberry.field()
-    async def priorities(self, info: Info) -> List[SearchPriorityResponse]:
+    async def priorities(self, info: Info) -> List[Priority]:
         user_id = info.context.user.get('id')
         #if not user_id:
         #    return UserNotFound()
@@ -60,8 +60,8 @@ class Query:
             sql = select(PriorityModel).order_by(PriorityModel.created_at.desc())
             db_priorities = (await s.execute(sql)).scalars().unique().all()
 
-            if not db_priorities:
-                return PriorityNotFoundResponse()
+            #if not db_priorities:
+            #    return PriorityNotFoundResponse()
             
         return [Priority.marshal(priority) for priority in db_priorities]    
 
