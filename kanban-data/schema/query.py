@@ -36,17 +36,17 @@ SearchTaskResponse = strawberry.union("TaskResponse", (Task, TaskNotFoundRespons
 @strawberry.type
 class Query:
     @strawberry.field()
-    async def boards(self, info: Info) -> List[SearchBoardResponse]:
+    async def boards(self, info: Info) -> List[Board]:
         user_id = info.context.user.get('id')
-        if not user_id:
-            return UserNotFound()
+        #if not user_id:
+        #    return UserNotFound()
         
         async with get_session() as s:
             sql = select(BoardModel).filter(BoardModel.user_id == user_id).order_by(BoardModel.created_at.desc())
             db_boards = (await s.execute(sql)).scalars().unique().all()
 
-            if not db_boards:
-                return BoardNotFoundResponse()              
+            #if not db_boards:
+            #    return BoardNotFoundResponse()              
             
         return [Board.marshal(board) for board in db_boards]
 
