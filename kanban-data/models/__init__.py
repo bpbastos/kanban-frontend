@@ -16,17 +16,16 @@ from models.subtask import SubTask
 from models.task import Task
 from models.workflow import Workflow
 
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST','localhost:5432')
+POSTGRES_USER = os.environ.get('POSTGRES_USER','kanban')
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD','kanbanpass')
+POSTGRES_DB = os.environ.get('POSTGRES_DB','kanban')
 
-DATABASE_PATH = "db/"
-# Verifica se o diretorio não existe
-if not os.path.exists(DATABASE_PATH):
-   # então cria o diretorio
-   os.makedirs(DATABASE_PATH)
-
-# url de acesso ao banco (essa é uma url de acesso ao sqlite local)
-#DATABASE_URL = 'sqlite+aiosqlite:///%s/kanban.db' % DATABASE_PATH 
+# url de acesso ao banco (essa é uma url de acesso ao postgresql)
 #postgresql+asyncpg://postgres:kanbandb@localhos:5432/kanban
-DATABASE_URL = 'postgresql+asyncpg://kanban:kanbanpass@db:5432/kanban'
+DATABASE_URL = 'postgresql+asyncpg://%s:%s@%s/%s' % (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_DB)
+
+print (DATABASE_URL)
 
 # cria a engine de conexão assíncrona com o banco
 engine = create_async_engine(
