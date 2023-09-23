@@ -17,6 +17,8 @@ RUN npm ci && npm cache clean --force
 # copy over all files to the work directory
 ADD . /app
 
+RUN chmod a+x entrypoint.sh
+
 # build the project
 RUN npm run build
 
@@ -25,4 +27,4 @@ ENV HOST 0.0.0.0
 EXPOSE 3000
 
 # run the build project with node
-ENTRYPOINT ["node","-r", "dotenv/config", ".output/server/index.mjs"]
+ENTRYPOINT ["/app/entrypoint.sh"]
