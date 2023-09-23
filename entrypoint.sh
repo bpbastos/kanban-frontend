@@ -1,3 +1,5 @@
 #!/bin/sh
 
-export $(cat /app/.env | egrep -v '#|^$' | xargs) && node /app/.output/server/index.mjs
+#export $(cat ./.env | egrep -v '#|^$' | xargs) && node /app/.output/server/index.mjs
+
+node /app/.output/server/index.mjs
