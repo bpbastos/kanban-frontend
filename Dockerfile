@@ -1,30 +1,33 @@
 FROM node:lts-alpine
 
-# create work directory in app folder
+ARG NODE_VERSION=lts
+ARG BACK4APP_URL=${BACK4APP_URL}
+ARG BACK4APP_APPID=${BACK4APP_APPID}
+ARG BACK4APP_RESTAPIKEY=${BACK4APP_RESTAPIKEY}
+ARG KANBANDATA_URL=${KANBANDATA_URL}
+
 WORKDIR /app
 
-# install required packages for node image
 RUN apk --no-cache add openssh g++ make python3 git
 
-# copy over package.json files
 COPY package.json /app/
 COPY package-lock.json /app/
 
-# install all depencies
 RUN npm ci && npm cache clean --force
 
-# copy over all files to the work directory
 ADD . /app
+
+RUN echo BACK4APP_URL=${BACK4APP_URL} > .env
+RUN echo BACK4APP_APPID=${BACK4APP_APPID} >> .env
+RUN echo BACK4APP_RESTAPIKEY=${BACK4APP_RESTAPIKEY} >> .env
+RUN echo KANBANDATA_URL=${KANBANDATA_URL} >> .env
 
 RUN chmod a+x entrypoint.sh
 
-# build the project
 RUN npm run build
 
-# expose the host and port 3000 to the server
 ENV HOST 0.0.0.0
 ENV PORT 3000
 EXPOSE 3000
 
-# run the build project with node
 ENTRYPOINT ["/app/entrypoint.sh"]
