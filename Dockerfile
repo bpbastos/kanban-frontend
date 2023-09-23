@@ -1,5 +1,4 @@
-# use node 16 alpine image
-FROM node:18.16.1-alpine
+FROM node:lts-alpine
 
 # create work directory in app folder
 WORKDIR /app
@@ -24,6 +23,7 @@ RUN npm run build
 
 # expose the host and port 3000 to the server
 ENV HOST 0.0.0.0
+ENV PORT 3000
 EXPOSE 3000
 
 # run the build project with node
