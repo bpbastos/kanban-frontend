@@ -1,34 +1,49 @@
-# Kanban MS (Micro Services) 
-<img src="images/diagrama.png" alt="Diagrama de implantação">
+# Kanban  Frontend 
+<img src="screenshot/board.png" alt="Tela principal">
 
-> Projeto de implantação por meio de orquestração com Docker Compose. O propósito deste projeto é realizar a implantação local dos micro-serviços: [Kanban Frontend](https://github.com/bpbastos/kanban-ms/tree/main/kanban-frontend) e [Kanban Data](https://github.com/bpbastos/kanban-ms/tree/main/kanban-data), ambos encontrados nesse repositório, além de configurá-los para utilizar o serviço de gerenciamento de usuários externo, o Back4app (disponível em https://back4app.com). Esses três micro-serviços fazem parte da aplicação web de gestão de projetos baseada no método Kanban. 
+> Frontend para a aplicação web de gerenciamento de projetos usando o método Kanban. Este frontend foi construído utilizando as tecnologias Nuxt 3, Vue 3, Tailwind CSS e DaisyUI, e se integra com duas APIs distintas. Uma delas é uma API RESTful responsável pelo gerenciamento de usuários, fornecida pelo serviço de BaaS (Backend As A Service) oferecido pelo provedor https://www.back4app.com/. A segunda API é uma API GraphQL fornecida pelo serviço kanban-data que você encontra nesse mesmo repositório.
 
-> Projeto de implantação desenvolvido como uma parte do trabalho de conclusão do terceiro e último módulo - Desenvolvimento Backend Avançado - da Pós-Graduação em Desenvolvimento FullStack da PUC-RIO. 
+> Este frontend foi desenvolvido como uma parte do trabalho de conclusão do terceiro e último módulo - Desenvolvimento Backend Avançado - da Pós-Graduação em Desenvolvimento FullStack da PUC-RIO. 
+
+
+## Funcionalidades
+
+- [x] Listar quadros.
+- [x] Criar tarefa.
+- [x] Editar tarefa.
+- [x] Excluir tarefa.
+- [x] Adicionar sub tarefas.
+- [x] Implementar backend real.
+- [x] Login de usuário.
+- [x] Logout de usuário.
+- [x] Registro de usuários.
+- [x] Criar novo quadro.
+- [x] Gerenciador de temas
+- [x] Sistema de notificação.
 
 ## Todo
 
-- [ ] Separar projetos em repositórios git diferentes
-- [ ] Desenvolver API Gateway (Apollo Federation)
-- [ ] Substituir o Back4app pelo projeto open source Parse Server - https://github.com/parse-community/parse-server
+- [ ] Arquivar quadros.
+- [ ] Criar/Editar/Arquivar workflows|status.
+- [ ] Arquivar tarefas.
+- [ ] Reordenar tarefas.
+- [ ] Reordenar sub tarefas.
+- [ ] Arrastar tarefas entre workflows|status.
+- [ ] Layout Responsivo para mobile.
+- [ ] Validação dos formulários.
+- [ ] Tratamento de erro para consultas graphql.
+- [ ] Exibir/Editar informações do perfil de usuário.
+
 
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se o seu ambiente atende aos seguintes requisitos:
 
+> ATENÇÃO, este frontend requer que os serviços de gerenciamento de usuários (Back4app) e de dados (Kanban-Data) estejam em execução antes de iniciar. Recomendo seguir as instruções contidas no README do repositório de implantação - https://github.com/bpbastos/kanban-ms - para garantir uma configuração adequada.
+
 * `Docker`
 
 > Instalação do docker: https://docs.docker.com/engine/install/
-
-* `Conta no BaaS - Back4app`
-
-> Você precisa criar uma conta gratuita no Back4app (https://back4app.com) e recuperar as seguintes Keys:
-
-```
-APPLICATION_ID
-RESTAPIKEY
-```
-
-> As Keys estão disponíveis na dashboard administrativa em "App Settings" > "Security & Keys"
 
 ## 🚀 Rodando
 
@@ -39,36 +54,23 @@ git clone https://github.com/bpbastos/kanban-ms.git
 
 Acesse o diretório do projeto com:
 ```
-cd kanban-ms
+cd kanban-ms/kanban-frontend
 ```
 
-Crie um arquivo .env no diretório raiz do projeto com as seguintes variáveis:
-> Substituia as variaveis BACK4APP_APPID e BACK4APP_RESTAPIKEY com as keys da sua conta no Back4app
+Crie um arquivo .env na raiz do diretório kanban-frontend com as seguintes variáveis:
 
 ```env
-#Back4app
 BACK4APP_URL=https://parseapi.back4app.com
 BACK4APP_APPID=chave-appid-do-back4app
 BACK4APP_RESTAPIKEY=chave-restapikey-do-back4app
-
-#API GraphQL
-KANBANDATA_URL=http://localhost:8000/graphql
-
-#Postgres
-POSTGRES_HOST=db
-POSTGRES_USER=kanban
-POSTGRES_PASSWORD=kanbanpass
-POSTGRES_DB=kanban
-
-#Frontend
-KANBANFRONT_URL=http://localhost:3000
+KANBANDATA_URL=url-do-servico-graphql-kanbandata
 NUXT_SECRET=chave-com-32-caracteres
 ```
 
-No diretório raiz, execute:
+No diretório kanban-frontend em um terminal, execute:
 ```sh
-docker compose up -d
-docker exec --env-file ./.env data python create_db.py
+docker build -t kanban-frontend:1.0 .
+docker run -d --env-file ./.env -p 3000:3000 --name frontend kanban-frontend:1.0 
 ```
 
-Abra o endereço http://localhost:3000 no seu navegador.
+Abra o endereço http://localhost:3000/ no seu navegador.
