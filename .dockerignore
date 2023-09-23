@@ -8,7 +8,7 @@ node_modules
 #Various
 README.md
 tmp
-#.env
+.env
 
 # Git
 .git
