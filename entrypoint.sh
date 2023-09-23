@@ -1,8 +1,12 @@
 #!/bin/sh
-echo BACK4APP_URL=$BACK4APP_URL >> /app/.env
-echo BACK4APP_APPID=$BACK4APP_APPID >> /app/.env
-echo BACK4APP_RESTAPIKEY=$BACK4APP_RESTAPIKEY >> /app/.env
-echo KANBANDATA_URL=$KANBANDATA_URL >> /app/.env
-echo NUXT_SECRET=$NUXT_SECRET >> /app/.env
+APP_PATH=/app
+echo > .env
+echo BACK4APP_URL=$BACK4APP_URL >>.env
+echo BACK4APP_APPID=$BACK4APP_APPID >> .env
+echo BACK4APP_RESTAPIKEY=$BACK4APP_RESTAPIKEY >> .env
+echo KANBANDATA_URL=$KANBANDATA_URL >> .env
+echo NUXT_SECRET=$NUXT_SECRET >> .env
 
-node -r dotenv/config .output/server/index.mjs
+sleep 5
+
+export $(cat .env | egrep -v '#|^$' | xargs) && node .output/server/index.mjs
