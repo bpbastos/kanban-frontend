@@ -1,25 +1,31 @@
-FROM node:16-alpine
+ARG NODE_VERSION=18.16.1
 
-WORKDIR /app
+FROM node:${NODE_VERSION}-slim as base
 
-RUN apk --no-cache add openssh g++ make python3 git
+ARG PORT=3000
 
-COPY package.json /app/
-COPY package-lock.json /app/
+ENV NODE_ENV=production
 
-RUN npm ci && npm cache clean --force
+WORKDIR /src
 
-ADD . /app
+# Build
+FROM base as build
+
+COPY --link package*.json .
+RUN npm install --omit=dev
+
+COPY --link . .
 
 RUN npm run build
+RUN npm prune
 
-ENV NITRO_HOST=0.0.0.0
-ENV NITRO_PORT=3000
-ENV BACK4APP_URL=${BACK4APP_URL}
-ENV BACK4APP_APPID=${BACK4APP_APPID}
-ENV BACK4APP_RESTAPIKEY=${BACK4APP_RESTAPIKEY}
-ENV KANBANDATA_URL=${KANBANDATA_URL}
+# Run
+FROM base
 
-EXPOSE 3000
+ENV PORT=$PORT
 
-ENTRYPOINT ["node", ".output/server/index.mjs"]
+COPY --from=build /src/.output /src/.output
+# Optional, only needed if you rely on unbundled dependencies
+# COPY --from=build /src/node_modules /src/node_modules
+
+CMD [ "node", ".output/server/index.mjs" ]
