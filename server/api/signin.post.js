@@ -16,6 +16,8 @@ export default defineEventHandler(async (event) => {
         "X-Parse-Revocable-Session": 1,
       },
     });
+    console.log("Response:",response)
+    console.log("Config:",config)
     if (!response.error) {
       return {
         id: response.objectId,
