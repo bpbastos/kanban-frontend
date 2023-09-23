@@ -1,11 +1,11 @@
 # use node 16 alpine image
-FROM node:18.16.1-slim
+FROM node:18.16.1-alpine
 
 # create work directory in app folder
 WORKDIR /app
 
 # install required packages for node image
-#RUN apk --no-cache add openssh g++ make python3 git
+RUN apk --no-cache add openssh g++ make python3 git
 
 # copy over package.json files
 COPY package.json /app/
