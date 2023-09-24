@@ -51,7 +51,7 @@
 
 Antes de começar, verifique se o seu ambiente atende aos seguintes requisitos:
 
-> ATENÇÃO, este frontend requer que o módulo de gerenciamento de usuários do BaaS [Back4App](https://www.back4app.com/) e micro serviço de dados [Kanban Data](https://github.com/bpbastos/kanban-data) estejam em execução antes de iniciar. Recomendo seguir as instruções contidas no README do repositório de implantação - [Kanban Deploy](https://github.com/bpbastos/kanban-deploy) - para garantir uma configuração adequada.
+> ATENÇÃO, este frontend requer que o módulo de gerenciamento de usuários do [Back4App](https://www.back4app.com/) e micro serviço de dados [Kanban Data](https://github.com/bpbastos/kanban-data) estejam em execução antes de iniciar. Recomendo seguir as instruções contidas no README do repositório de implantação - [Kanban Deploy](https://github.com/bpbastos/kanban-deploy) - para garantir uma configuração adequada.
 
 * `Docker`
 
