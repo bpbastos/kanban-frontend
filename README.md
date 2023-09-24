@@ -13,7 +13,7 @@
 
 <img src="screenshot/board.png" alt="Tela principal">
 
-> Frontend para a SPA de gerenciamento de projetos usando o método Kanban. Este frontend foi construído utilizando as tecnologias Nuxt 3, Vue 3, Tailwind CSS e DaisyUI, e se integra com duas APIs distintas. Uma delas é uma API RESTful responsável pelo gerenciamento de usuários, fornecida pelo serviço de BaaS (Backend As A Service) oferecido pelo provedor [Back4App](https://www.back4app.com/). A segunda API é uma API GraphQL fornecida pelo micro-serviço [Kanban Data](https://github.com/bpbastos/kanban-data).
+> Frontend da SPA de gerenciamento de projetos usando o método Kanban. Este frontend foi construído utilizando as tecnologias Nuxt 3, Vue 3, Tailwind CSS e DaisyUI, e se integra com duas APIs distintas. Uma delas é uma API RESTful responsável pelo gerenciamento de usuários, fornecida pelo serviço de BaaS (Backend As A Service) oferecido pelo provedor [Back4App](https://www.back4app.com/). A segunda API é uma API GraphQL fornecida pelo micro-serviço [Kanban Data](https://github.com/bpbastos/kanban-data).
 
 > Este frontend foi desenvolvido como uma parte do trabalho de conclusão do terceiro e último módulo - Desenvolvimento Backend Avançado - da Pós-Graduação em Desenvolvimento FullStack da PUC-RIO. 
 
@@ -51,11 +51,22 @@
 
 Antes de começar, verifique se o seu ambiente atende aos seguintes requisitos:
 
-> ATENÇÃO, este frontend requer que os serviços de gerenciamento de usuários (Back4app) e de dados (Kanban Data) estejam em execução antes de iniciar. Recomendo seguir as instruções contidas no README do repositório de implantação - https://github.com/bpbastos/kanban-deploy - para garantir uma configuração adequada.
+> ATENÇÃO, este frontend requer que os serviços de gerenciamento de usuários ([Back4App](https://www.back4app.com/) e de dados ([Kanban Data](https://github.com/bpbastos/kanban-data)) estejam em execução antes de iniciar. Recomendo seguir as instruções contidas no README do repositório de implantação - [Kanban Deploy](https://github.com/bpbastos/kanban-deploy) - para garantir uma configuração adequada.
 
 * `Docker`
 
 > Instalação do docker: https://docs.docker.com/engine/install/
+
+* `Conta no BaaS - Back4app`
+
+> Você precisa criar uma conta gratuita no Back4app (https://back4app.com) e recuperar as seguintes Keys:
+
+```
+APPLICATION_ID
+RESTAPIKEY
+```
+
+> As Keys estão disponíveis na dashboard administrativa em "App Settings" > "Security & Keys"
 
 ## 🚀 Rodando
 
@@ -70,6 +81,9 @@ cd kanban-frontend
 ```
 
 Crie um arquivo .env na raiz do diretório kanban-frontend com as seguintes variáveis:
+
+> Substituia as variáveis BACK4APP_APPID e BACK4APP_RESTAPIKEY com as keys da sua conta no Back4app. 
+> Crie uma chave única de 32 caracteres e atribua à variável NUXT_SECRET.
 
 ```env
 BACK4APP_URL=https://parseapi.back4app.com
