@@ -89,7 +89,7 @@ Crie um arquivo .env na raiz do diretório kanban-frontend com as seguintes vari
 BACK4APP_URL=https://parseapi.back4app.com
 BACK4APP_APPID=chave-appid-do-back4app
 BACK4APP_RESTAPIKEY=chave-restapikey-do-back4app
-KANBANDATA_URL=url-do-servico-graphql-kanbandata
+KANBANDATA_URL=http://localhost:8000/graphql
 NUXT_SECRET=chave-com-32-caracteres
 ```
 
