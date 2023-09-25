@@ -21,18 +21,18 @@
 ## Funcionalidades
 
 - [x] Listar quadros.
+- [x] Criar novo quadro.
 - [x] Criar tarefa.
 - [x] Editar tarefa.
 - [x] Excluir tarefa.
 - [x] Adicionar sub tarefas.
-- [x] Implementar backend real.
 - [x] Login de usuário.
 - [x] Logout de usuário.
 - [x] Registro de usuários.
-- [x] Criar novo quadro.
-- [x] Gerenciador de temas
+- [x] Gerenciador de temas.
 - [x] Sistema de notificação.
-
+- [x] Implementar backend real.
+      
 ## Todo
 
 - [ ] Arquivar quadros.
