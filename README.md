@@ -99,7 +99,7 @@ No diretório kanban-frontend em um terminal, execute:
 ```sh
 docker build -t kanban-frontend:1.0 $(for i in `cat .env`; do out+="--build-arg $i " ; done; echo $out;out="") .
 ```
-PS.: O trecho "`$(for i in `cat .env`; do out+="--build-arg $i " ; done; echo $out;out="")`" contrói o parametro --build-arg automaticamente de acordo com as variáveis do arquivo .env.
+PS.: O trecho "`$(for i in `cat .env`; do out+="--build-arg $i " ; done; echo $out;out="")`" constrói o parâmetro --build-arg automaticamente de acordo com as variáveis do arquivo .env.
 
 E depois:
 ```sh
