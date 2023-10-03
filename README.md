@@ -47,6 +47,7 @@
 - [ ] Validação dos formulários.
 - [ ] Tratamento de erro para consultas graphql.
 - [ ] Exibir/Editar informações do perfil de usuário.
+- [ ] Loading overlay
 
 
 ## 💻 Pré-requisitos
