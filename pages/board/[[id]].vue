@@ -77,12 +77,12 @@ const workflows = computed(() => {
 const addedNewBoard = (_boardId) => {
   boardSwitcherUpdate.value++;
   showAddBoardForm.value = false;
-  //navigateTo(`/board/${_boardId}`)
+  navigateTo(`/board/${_boardId}`)
 }
 
 const changeBoard = (_boardId) => {
-  boardId.value = _boardId
-  //navigateTo(`/board/${_boardId}`)
+  //boardId.value = _boardId
+  navigateTo(`/board/${_boardId}`)
 }
 
 definePageMeta({
