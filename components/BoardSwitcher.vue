@@ -9,7 +9,7 @@
     </summary>
     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box text-base">
       <li>
-        <a v-for="board in boards" @click="changeSelected(board.id, board.name)">{{ board.name }}</a>
+        <a class="uppercase" v-for="board in boards" @click="changeSelected(board.id, board.name)">{{ board.name }}</a>
       </li>
     </ul>
   </details>
