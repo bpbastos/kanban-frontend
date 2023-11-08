@@ -77,6 +77,7 @@ const workflows = computed(() => {
 const addedNewBoard = (_boardId) => {
   boardSwitcherUpdate.value++;
   showAddBoardForm.value = false;
+  boardId.value = _boardId
   //navigateTo(`/board/${_boardId}`)
 }
 
