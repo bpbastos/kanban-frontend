@@ -17,9 +17,6 @@
 
 > Link para o [protótipo em alta fidelidade no Figma](https://www.figma.com/file/H1MaexkrCc6AknLQi43HqE/Kanban-App?type=design&node-id=0%3A1&mode=design&t=wljF02F4Yds8ZjUA-1)
 
-> Este frontend foi desenvolvido como uma parte do trabalho de conclusão do terceiro e último módulo - Desenvolvimento Backend Avançado - da Pós-Graduação em Engenharia de Software/Desenvolvimento FullStack da PUC-RIO. 
-
-
 ## Funcionalidades
 
 - [x] Listar quadros.
